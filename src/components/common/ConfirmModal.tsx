@@ -48,10 +48,10 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
       }
     >
       <div className="flex items-start gap-4 py-2">
-        <div className="p-3 rounded-xl bg-rose-500/10 text-rose-400 border border-rose-500/20 shrink-0">
+        <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-500/20 shrink-0">
           <AlertTriangle className="w-6 h-6" />
         </div>
-        <div className="text-sm text-slate-300 leading-relaxed pt-1">
+        <div className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed pt-1">
           {message}
         </div>
       </div>

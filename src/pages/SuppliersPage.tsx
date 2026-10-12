@@ -11,14 +11,13 @@ import {
   Truck,
   Plus,
   Search,
+  Download,
   Phone,
   Mail,
   MapPin,
   Edit,
   Trash2,
   Cpu,
-  Download,
-  Eye,
 } from 'lucide-react';
 
 interface SuppliersPageProps {
@@ -27,7 +26,6 @@ interface SuppliersPageProps {
 
 export const SuppliersPage: React.FC<SuppliersPageProps> = ({ onSelectProduct }) => {
   const { suppliers, products, deleteSupplier } = useInventory();
-
   const [search, setSearch] = useState('');
   const [formModalOpen, setFormModalOpen] = useState(false);
   const [detailModalOpen, setDetailModalOpen] = useState(false);
@@ -57,13 +55,13 @@ export const SuppliersPage: React.FC<SuppliersPageProps> = ({ onSelectProduct })
     const rows = filteredSuppliers.map((s) => ({
       'Supplier Name': s.name,
       'Contact Person': s.contact_person,
-      Phone: s.phone,
-      Email: s.email,
-      Address: s.address,
-      'Notes & Terms': s.notes || '',
-      'Supplied Products Count': products.filter((p) => p.supplier_id === s.id).length,
+      'Phone': s.phone,
+      'Email': s.email,
+      'Business Address': s.address,
+      'Associated Products Count': products.filter((p) => p.supplier_id === s.id).length,
+      'Notes': s.notes || '',
     }));
-    exportToCSV('Hardware_Suppliers_Directory', rows);
+    exportToCSV('Suppliers_Directory', rows);
   };
 
   return (
@@ -71,8 +69,8 @@ export const SuppliersPage: React.FC<SuppliersPageProps> = ({ onSelectProduct })
       {/* Top Banner */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl font-bold text-white">Suppliers & Hardware Distributors</h2>
-          <p className="text-xs text-slate-400">
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white">Suppliers & Hardware Distributors</h2>
+          <p className="text-xs text-slate-500 dark:text-slate-400">
             Manage relationships with chip distributors, component manufacturers, and peripherals vendors
           </p>
         </div>
@@ -81,7 +79,7 @@ export const SuppliersPage: React.FC<SuppliersPageProps> = ({ onSelectProduct })
           <Button
             variant="secondary"
             size="sm"
-            icon={<Download className="w-4 h-4 text-slate-400" />}
+            icon={<Download className="w-4 h-4 text-slate-500 dark:text-slate-400" />}
             onClick={handleExportCSV}
           >
             Export Directory CSV
@@ -118,12 +116,12 @@ export const SuppliersPage: React.FC<SuppliersPageProps> = ({ onSelectProduct })
           return (
             <div
               key={supplier.id}
-              className="p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-slate-700 transition-all shadow-xl flex flex-col justify-between group"
+              className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-all shadow-sm dark:shadow-xl flex flex-col justify-between group"
             >
               <div className="space-y-3">
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500/20 to-cyan-500/20 text-cyan-400 border border-cyan-500/30 flex items-center justify-center font-bold text-sm">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-50 to-cyan-50 dark:from-indigo-500/20 dark:to-cyan-500/20 text-cyan-700 dark:text-cyan-400 border border-cyan-200 dark:border-cyan-500/30 flex items-center justify-center font-bold text-sm">
                       <Truck className="w-5 h-5" />
                     </div>
                     <div>
@@ -132,11 +130,11 @@ export const SuppliersPage: React.FC<SuppliersPageProps> = ({ onSelectProduct })
                           setSelectedSupplier(supplier);
                           setDetailModalOpen(true);
                         }}
-                        className="font-bold text-white text-base group-hover:text-cyan-400 transition-colors cursor-pointer line-clamp-1"
+                        className="font-bold text-slate-900 dark:text-white text-base group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors cursor-pointer line-clamp-1"
                       >
                         {supplier.name}
                       </h3>
-                      <p className="text-xs text-slate-400 font-medium">Attn: {supplier.contact_person}</p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">Attn: {supplier.contact_person}</p>
                     </div>
                   </div>
 
@@ -146,14 +144,14 @@ export const SuppliersPage: React.FC<SuppliersPageProps> = ({ onSelectProduct })
                         setSupplierToEdit(supplier);
                         setFormModalOpen(true);
                       }}
-                      className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
+                      className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
                       title="Edit Supplier"
                     >
                       <Edit className="w-4 h-4" />
                     </button>
                     <button
                       onClick={() => setSupplierToDelete(supplier)}
-                      className="p-1.5 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-rose-950/30 transition-colors cursor-pointer"
+                      className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors cursor-pointer"
                       title="Delete Supplier"
                     >
                       <Trash2 className="w-4 h-4" />
@@ -161,36 +159,36 @@ export const SuppliersPage: React.FC<SuppliersPageProps> = ({ onSelectProduct })
                   </div>
                 </div>
 
-                <div className="space-y-1.5 text-xs text-slate-300 pt-1">
+                <div className="space-y-1.5 text-xs text-slate-700 dark:text-slate-300 pt-1">
                   <div className="flex items-center gap-2">
-                    <Phone className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+                    <Phone className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400 shrink-0" />
                     <span>{supplier.phone}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Mail className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+                    <Mail className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400 shrink-0" />
                     <span className="truncate">{supplier.email}</span>
                   </div>
-                  <div className="flex items-start gap-2 text-slate-400">
-                    <MapPin className="w-3.5 h-3.5 text-slate-500 shrink-0 mt-0.5" />
+                  <div className="flex items-start gap-2 text-slate-500 dark:text-slate-400">
+                    <MapPin className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500 shrink-0 mt-0.5" />
                     <span className="line-clamp-1">{supplier.address}</span>
                   </div>
                 </div>
               </div>
 
               {/* Card Footer with Associated Products */}
-              <div className="pt-4 mt-4 border-t border-slate-800/80 flex items-center justify-between">
+              <div className="pt-4 mt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
                 <button
                   onClick={() => {
                     setSelectedSupplier(supplier);
                     setDetailModalOpen(true);
                   }}
-                  className="flex items-center gap-1.5 text-xs text-cyan-400 hover:text-cyan-300 font-semibold cursor-pointer"
+                  className="flex items-center gap-1.5 text-xs text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-300 font-semibold cursor-pointer"
                 >
                   <Cpu className="w-3.5 h-3.5" />
                   <span>{suppliedList.length} Hardware Products</span>
                 </button>
 
-                <span className="text-xs text-slate-400 font-mono">
+                <span className="text-xs text-slate-500 dark:text-slate-400 font-mono">
                   {totalSuppliedUnits} stocked
                 </span>
               </div>

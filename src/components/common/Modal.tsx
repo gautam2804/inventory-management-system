@@ -53,7 +53,7 @@ export const Modal: React.FC<ModalProps> = ({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm transition-opacity"
+            className="fixed inset-0 bg-slate-950/70 backdrop-blur-sm transition-opacity"
             onClick={onClose}
           />
 
@@ -65,32 +65,32 @@ export const Modal: React.FC<ModalProps> = ({
               exit={{ opacity: 0, scale: 0.95, y: 15 }}
               transition={{ duration: 0.25, ease: 'easeOut' }}
               className={cn(
-                'w-full transform overflow-hidden rounded-2xl bg-slate-900 border border-slate-800 text-left align-middle shadow-2xl transition-all relative flex flex-col max-h-[90vh]',
+                'w-full transform overflow-hidden rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-left align-middle shadow-2xl transition-all relative flex flex-col max-h-[90vh]',
                 maxWidthStyles[maxWidth]
               )}
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header */}
-              <div className="flex items-start justify-between border-b border-slate-800/80 px-6 py-4.5 bg-slate-900/50">
+              <div className="flex items-start justify-between border-b border-slate-200 dark:border-slate-800/80 px-6 py-4.5 bg-slate-50 dark:bg-slate-900/50">
                 <div>
-                  <h3 className="text-lg font-semibold text-white tracking-tight">{title}</h3>
-                  {subtitle && <p className="text-xs text-slate-400 mt-0.5">{subtitle}</p>}
+                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white tracking-tight">{title}</h3>
+                  {subtitle && <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{subtitle}</p>}
                 </div>
                 <button
                   type="button"
                   onClick={onClose}
-                  className="rounded-lg p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+                  className="rounded-lg p-1.5 text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
                 >
                   <X className="w-5 h-5" />
                 </button>
               </div>
 
               {/* Body */}
-              <div className="flex-1 overflow-y-auto p-6 text-slate-300 custom-scrollbar">{children}</div>
+              <div className="flex-1 overflow-y-auto p-6 text-slate-700 dark:text-slate-300 custom-scrollbar">{children}</div>
 
               {/* Footer */}
               {footer && (
-                <div className="flex items-center justify-end gap-3 border-t border-slate-800/80 px-6 py-4 bg-slate-950/40">
+                <div className="flex items-center justify-end gap-3 border-t border-slate-200 dark:border-slate-800/80 px-6 py-4 bg-slate-50 dark:bg-slate-950/40">
                   {footer}
                 </div>
               )}

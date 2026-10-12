@@ -66,29 +66,29 @@ export const SupplierDetailModal: React.FC<SupplierDetailModalProps> = ({
     >
       <div className="space-y-5">
         {/* Contact Info Card */}
-        <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-3">
+        <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 space-y-3">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
-            <div className="flex items-center gap-2.5 text-slate-300">
-              <Phone className="w-4 h-4 text-cyan-400 shrink-0" />
+            <div className="flex items-center gap-2.5 text-slate-700 dark:text-slate-300">
+              <Phone className="w-4 h-4 text-cyan-600 dark:text-cyan-400 shrink-0" />
               <span>{supplier.phone}</span>
             </div>
 
-            <div className="flex items-center gap-2.5 text-slate-300">
-              <Mail className="w-4 h-4 text-cyan-400 shrink-0" />
-              <a href={`mailto:${supplier.email}`} className="text-cyan-400 hover:underline">
+            <div className="flex items-center gap-2.5 text-slate-700 dark:text-slate-300">
+              <Mail className="w-4 h-4 text-cyan-600 dark:text-cyan-400 shrink-0" />
+              <a href={`mailto:${supplier.email}`} className="text-cyan-600 dark:text-cyan-400 hover:underline">
                 {supplier.email}
               </a>
             </div>
           </div>
 
-          <div className="flex items-start gap-2.5 text-sm text-slate-300 pt-1">
-            <MapPin className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
+          <div className="flex items-start gap-2.5 text-sm text-slate-700 dark:text-slate-300 pt-1">
+            <MapPin className="w-4 h-4 text-cyan-600 dark:text-cyan-400 shrink-0 mt-0.5" />
             <span>{supplier.address}</span>
           </div>
 
           {supplier.notes && (
-            <div className="pt-2 border-t border-slate-800 text-xs text-slate-400">
-              <span className="font-semibold text-slate-300 block mb-0.5">Notes & Terms:</span>
+            <div className="pt-2 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-400">
+              <span className="font-semibold text-slate-800 dark:text-slate-300 block mb-0.5">Notes & Terms:</span>
               {supplier.notes}
             </div>
           )}
@@ -98,13 +98,13 @@ export const SupplierDetailModal: React.FC<SupplierDetailModalProps> = ({
         <div>
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
-              <Cpu className="w-4 h-4 text-cyan-400" />
-              <h4 className="text-sm font-semibold text-white">Supplied Products ({suppliedProducts.length})</h4>
+              <Cpu className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
+              <h4 className="text-sm font-semibold text-slate-900 dark:text-white">Supplied Products ({suppliedProducts.length})</h4>
             </div>
             {suppliedProducts.length > 0 && (
-              <span className="text-xs text-slate-400">
+              <span className="text-xs text-slate-500 dark:text-slate-400">
                 Total Units:{' '}
-                <span className="font-semibold text-white">
+                <span className="font-semibold text-slate-900 dark:text-white">
                   {suppliedProducts.reduce((acc, p) => acc + p.quantity, 0)}
                 </span>
               </span>
@@ -112,7 +112,7 @@ export const SupplierDetailModal: React.FC<SupplierDetailModalProps> = ({
           </div>
 
           {suppliedProducts.length === 0 ? (
-            <div className="p-6 text-center rounded-xl bg-slate-950/40 border border-slate-800 text-xs text-slate-400">
+            <div className="p-6 text-center rounded-xl bg-slate-50 dark:bg-slate-950/40 border border-slate-200 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400">
               No products are currently linked to this supplier.
             </div>
           ) : (
@@ -124,13 +124,13 @@ export const SupplierDetailModal: React.FC<SupplierDetailModalProps> = ({
                     onClose();
                     onSelectProduct(prod);
                   }}
-                  className="p-3 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 flex items-center justify-between gap-3 cursor-pointer transition-colors"
+                  className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 flex items-center justify-between gap-3 cursor-pointer transition-colors shadow-sm dark:shadow-none"
                 >
                   <div>
-                    <div className="text-xs font-semibold text-white hover:text-cyan-400 transition-colors">
+                    <div className="text-xs font-semibold text-slate-900 dark:text-white hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors">
                       {prod.name}
                     </div>
-                    <div className="text-[11px] text-slate-400 font-mono mt-0.5">
+                    <div className="text-[11px] text-slate-500 dark:text-slate-400 font-mono mt-0.5">
                       SKU: {prod.sku} &bull; Cost: {formatCurrency(prod.purchase_price)}
                     </div>
                   </div>
@@ -152,7 +152,7 @@ export const SupplierDetailModal: React.FC<SupplierDetailModalProps> = ({
           )}
 
           {suppliedProducts.length > 0 && (
-            <div className="mt-3 p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs flex items-center gap-2">
+            <div className="mt-3 p-3 rounded-lg bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 text-amber-700 dark:text-amber-400 text-xs flex items-center gap-2">
               <AlertTriangle className="w-4 h-4 shrink-0" />
               <span>
                 To delete this supplier, you must first reassign or remove its {suppliedProducts.length} associated product(s).

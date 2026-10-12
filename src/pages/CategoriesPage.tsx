@@ -5,7 +5,7 @@ import { Button } from '../components/common/Button';
 import { Input } from '../components/common/Input';
 import { ConfirmModal } from '../components/common/ConfirmModal';
 import { CategoryFormModal } from '../components/categories/CategoryFormModal';
-import { Layers, Plus, Search, Edit, Trash2, Cpu, AlertTriangle } from 'lucide-react';
+import { Plus, Search, Edit, Trash2, Cpu } from 'lucide-react';
 
 interface CategoriesPageProps {
   onNavigateToProductsWithCategory: (categoryId: string) => void;
@@ -41,8 +41,8 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl font-bold text-white">Hardware Classification</h2>
-          <p className="text-xs text-slate-400">
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white">Hardware Classification</h2>
+          <p className="text-xs text-slate-500 dark:text-slate-400">
             Define categories, SKU prefixes, and component groupings
           </p>
         </div>
@@ -80,19 +80,19 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
           return (
             <div
               key={category.id}
-              className="p-5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-slate-700 transition-all shadow-lg flex flex-col justify-between group"
+              className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 transition-all shadow-sm dark:shadow-lg flex flex-col justify-between group"
             >
               <div>
                 <div className="flex items-start justify-between gap-2 mb-3">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-9 h-9 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 flex items-center justify-center font-bold text-xs font-mono">
+                    <div className="w-9 h-9 rounded-xl bg-cyan-50 dark:bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 border border-cyan-200 dark:border-cyan-500/20 flex items-center justify-center font-bold text-xs font-mono">
                       {category.code}
                     </div>
                     <div>
-                      <h3 className="font-bold text-white text-base group-hover:text-cyan-400 transition-colors">
+                      <h3 className="font-bold text-slate-900 dark:text-white text-base group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
                         {category.name}
                       </h3>
-                      <span className="text-[10px] font-mono text-slate-500">Prefix: {category.code}</span>
+                      <span className="text-[10px] font-mono text-slate-400 dark:text-slate-500">Prefix: {category.code}</span>
                     </div>
                   </div>
 
@@ -102,14 +102,14 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
                         setCategoryToEdit(category);
                         setModalOpen(true);
                       }}
-                      className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
+                      className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
                       title="Edit Category"
                     >
                       <Edit className="w-4 h-4" />
                     </button>
                     <button
                       onClick={() => setCategoryToDelete(category)}
-                      className="p-1.5 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-rose-950/30 transition-colors cursor-pointer"
+                      className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors cursor-pointer"
                       title="Delete Category"
                     >
                       <Trash2 className="w-4 h-4" />
@@ -117,22 +117,22 @@ export const CategoriesPage: React.FC<CategoriesPageProps> = ({
                   </div>
                 </div>
 
-                <p className="text-xs text-slate-400 line-clamp-2 min-h-[32px] leading-relaxed">
+                <p className="text-xs text-slate-600 dark:text-slate-400 line-clamp-2 min-h-[32px] leading-relaxed">
                   {category.description || 'No specific description provided for this classification.'}
                 </p>
               </div>
 
               {/* Category Footer Stats */}
-              <div className="pt-4 mt-4 border-t border-slate-800/80 flex items-center justify-between">
+              <div className="pt-4 mt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
                 <button
                   onClick={() => onNavigateToProductsWithCategory(category.id)}
-                  className="flex items-center gap-1.5 text-xs text-cyan-400 hover:text-cyan-300 font-semibold cursor-pointer"
+                  className="flex items-center gap-1.5 text-xs text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-300 font-semibold cursor-pointer"
                 >
                   <Cpu className="w-3.5 h-3.5" />
                   <span>{associatedCount} Products</span>
                 </button>
 
-                <span className="text-xs text-slate-400 font-mono">
+                <span className="text-xs text-slate-500 dark:text-slate-400 font-mono">
                   {totalUnits} stocked units
                 </span>
               </div>

@@ -9,10 +9,9 @@ import {
   ArrowLeftRight,
   Trash2,
   Copy,
-  ExternalLink,
   Layers,
   Truck,
-  DollarSign,
+  IndianRupee,
   PackageCheck,
   Cpu,
 } from 'lucide-react';
@@ -74,7 +73,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             <Button
               variant="secondary"
               size="sm"
-              icon={<ArrowLeftRight className="w-3.5 h-3.5 text-indigo-400" />}
+              icon={<ArrowLeftRight className="w-3.5 h-3.5 text-indigo-500 dark:text-indigo-400" />}
               onClick={() => {
                 onClose();
                 onAdjustStock(product);
@@ -101,7 +100,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
         {/* Top Header Card */}
         <div className="flex flex-col sm:flex-row gap-5 items-start">
           {/* Image or Hardware Icon */}
-          <div className="w-full sm:w-44 h-44 rounded-2xl bg-slate-950 border border-slate-800 overflow-hidden shrink-0 flex items-center justify-center relative shadow-lg">
+          <div className="w-full sm:w-44 h-44 rounded-2xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 overflow-hidden shrink-0 flex items-center justify-center relative shadow-sm dark:shadow-lg">
             {product.image_url ? (
               <img
                 src={product.image_url}
@@ -113,8 +112,8 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 }}
               />
             ) : (
-              <div className="flex flex-col items-center justify-center text-slate-500 gap-2">
-                <Cpu className="w-12 h-12 text-slate-600" />
+              <div className="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 gap-2">
+                <Cpu className="w-12 h-12 text-slate-400 dark:text-slate-600" />
                 <span className="text-xs font-mono">No Image Available</span>
               </div>
             )}
@@ -142,7 +141,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             <div className="flex flex-wrap items-center gap-2">
               <button
                 onClick={() => copyToClipboard(product.sku, 'SKU')}
-                className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-cyan-950/60 text-cyan-400 border border-cyan-800/40 text-xs font-mono font-semibold hover:bg-cyan-900/60 transition-colors cursor-pointer"
+                className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-cyan-100 dark:bg-cyan-950/60 text-cyan-800 dark:text-cyan-400 border border-cyan-200 dark:border-cyan-800/40 text-xs font-mono font-semibold hover:bg-cyan-200 dark:hover:bg-cyan-900/60 transition-colors cursor-pointer"
                 title="Click to copy SKU"
               >
                 <span>SKU: {product.sku}</span>
@@ -152,7 +151,7 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
               {product.barcode && (
                 <button
                   onClick={() => copyToClipboard(product.barcode!, 'Barcode')}
-                  className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 border border-slate-700 text-xs font-mono hover:bg-slate-700 transition-colors cursor-pointer"
+                  className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-xs font-mono hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer"
                   title="Click to copy Barcode"
                 >
                   <span>UPC: {product.barcode}</span>
@@ -160,105 +159,105 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
                 </button>
               )}
 
-              <span className="flex items-center gap-1 text-xs text-slate-400 bg-slate-800/60 px-2 py-0.5 rounded border border-slate-700/60">
-                <Layers className="w-3 h-3 text-cyan-400" />
+              <span className="flex items-center gap-1 text-xs text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/60 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700/60">
+                <Layers className="w-3 h-3 text-cyan-600 dark:text-cyan-400" />
                 {product.category?.name || 'Hardware'}
               </span>
             </div>
 
-            <p className="text-sm text-slate-300 leading-relaxed">
+            <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
               {product.description || 'No extended specifications entered for this hardware product.'}
             </p>
 
             <div className="grid grid-cols-2 gap-3 pt-1 text-xs">
               <div>
-                <span className="text-slate-400">Manufacturer / Brand:</span>
-                <span className="font-semibold text-white ml-1.5">{product.brand}</span>
+                <span className="text-slate-500 dark:text-slate-400">Manufacturer / Brand:</span>
+                <span className="font-semibold text-slate-900 dark:text-white ml-1.5">{product.brand}</span>
               </div>
               <div>
-                <span className="text-slate-400">Model / Part #:</span>
-                <span className="font-semibold text-white ml-1.5 font-mono">{product.model}</span>
+                <span className="text-slate-500 dark:text-slate-400">Model / Part #:</span>
+                <span className="font-semibold text-slate-900 dark:text-white ml-1.5 font-mono">{product.model}</span>
               </div>
               <div>
-                <span className="text-slate-400">Min Stock Warning:</span>
-                <span className="font-semibold text-amber-400 ml-1.5">{product.min_stock_level} units</span>
+                <span className="text-slate-500 dark:text-slate-400">Min Stock Warning:</span>
+                <span className="font-semibold text-amber-600 dark:text-amber-400 ml-1.5">{product.min_stock_level} units</span>
               </div>
               <div>
-                <span className="text-slate-400">Record Created:</span>
-                <span className="font-semibold text-slate-300 ml-1.5">{formatDate(product.created_at)}</span>
+                <span className="text-slate-500 dark:text-slate-400">Record Created:</span>
+                <span className="font-semibold text-slate-700 dark:text-slate-300 ml-1.5">{formatDate(product.created_at)}</span>
               </div>
             </div>
           </div>
         </div>
 
         {/* Financials & Stock Matrix */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 rounded-xl bg-slate-950/70 border border-slate-800">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 rounded-xl bg-slate-50 dark:bg-slate-950/70 border border-slate-200 dark:border-slate-800">
           <div className="space-y-1">
-            <span className="text-[11px] text-slate-400 uppercase tracking-wider block">Available Stock</span>
-            <div className="text-xl font-bold text-white flex items-center gap-1">
+            <span className="text-[11px] text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Available Stock</span>
+            <div className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-1">
               <span>{product.quantity}</span>
-              <span className="text-xs font-normal text-slate-400">units</span>
+              <span className="text-xs font-normal text-slate-500 dark:text-slate-400">units</span>
             </div>
           </div>
 
           <div className="space-y-1">
-            <span className="text-[11px] text-slate-400 uppercase tracking-wider block">Purchase Cost</span>
-            <div className="text-xl font-bold text-slate-300">{formatCurrency(product.purchase_price)}</div>
+            <span className="text-[11px] text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Purchase Cost</span>
+            <div className="text-xl font-bold text-slate-700 dark:text-slate-300">{formatCurrency(product.purchase_price)}</div>
           </div>
 
           <div className="space-y-1">
-            <span className="text-[11px] text-slate-400 uppercase tracking-wider block">Selling Price</span>
-            <div className="text-xl font-bold text-cyan-400">{formatCurrency(product.selling_price)}</div>
+            <span className="text-[11px] text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Selling Price</span>
+            <div className="text-xl font-bold text-cyan-600 dark:text-cyan-400">{formatCurrency(product.selling_price)}</div>
           </div>
 
           <div className="space-y-1">
-            <span className="text-[11px] text-slate-400 uppercase tracking-wider block">Gross Margin</span>
-            <div className="text-xl font-bold text-emerald-400">
+            <span className="text-[11px] text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Gross Margin</span>
+            <div className="text-xl font-bold text-emerald-600 dark:text-emerald-400">
               +{formatCurrency(margin)}{' '}
-              <span className="text-xs font-normal text-emerald-500">({marginPercent}%)</span>
+              <span className="text-xs font-normal text-emerald-700 dark:text-emerald-500">({marginPercent}%)</span>
             </div>
           </div>
         </div>
 
         {/* Inventory Valuation Breakdown */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-between">
+          <div className="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-between shadow-sm dark:shadow-none">
             <div>
-              <div className="text-xs text-slate-400">Total Capital Tied (Cost x Qty)</div>
-              <div className="text-lg font-bold text-slate-200 mt-0.5">{formatCurrency(totalValuation)}</div>
+              <div className="text-xs text-slate-500 dark:text-slate-400">Total Capital Tied (Cost x Qty)</div>
+              <div className="text-lg font-bold text-slate-800 dark:text-slate-200 mt-0.5">{formatCurrency(totalValuation)}</div>
             </div>
-            <DollarSign className="w-7 h-7 text-indigo-400/50" />
+            <IndianRupee className="w-7 h-7 text-indigo-500/50 dark:text-indigo-400/50" />
           </div>
 
-          <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-between">
+          <div className="p-3.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-between shadow-sm dark:shadow-none">
             <div>
-              <div className="text-xs text-slate-400">Potential Gross Revenue (Price x Qty)</div>
-              <div className="text-lg font-bold text-cyan-400 mt-0.5">{formatCurrency(totalPotentialRevenue)}</div>
+              <div className="text-xs text-slate-500 dark:text-slate-400">Potential Gross Revenue (Price x Qty)</div>
+              <div className="text-lg font-bold text-cyan-600 dark:text-cyan-400 mt-0.5">{formatCurrency(totalPotentialRevenue)}</div>
             </div>
-            <PackageCheck className="w-7 h-7 text-cyan-400/50" />
+            <PackageCheck className="w-7 h-7 text-cyan-500/50 dark:text-cyan-400/50" />
           </div>
         </div>
 
         {/* Associated Supplier Card */}
         {product.supplier && (
-          <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-800 space-y-2">
+          <div className="p-4 rounded-xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 space-y-2 shadow-sm dark:shadow-none">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Truck className="w-4 h-4 text-cyan-400" />
-                <span className="text-xs font-semibold text-white">Distributor / Supplier</span>
+                <Truck className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
+                <span className="text-xs font-semibold text-slate-900 dark:text-white">Distributor / Supplier</span>
               </div>
-              <span className="text-xs font-medium text-slate-300">{product.supplier.name}</span>
+              <span className="text-xs font-medium text-slate-700 dark:text-slate-300">{product.supplier.name}</span>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs text-slate-400 pt-1">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs text-slate-500 dark:text-slate-400 pt-1">
               <div>
-                <span className="text-slate-500">Contact:</span> {product.supplier.contact_person}
+                <span className="text-slate-600 dark:text-slate-500 font-medium">Contact:</span> {product.supplier.contact_person}
               </div>
               <div>
-                <span className="text-slate-500">Phone:</span> {product.supplier.phone || '-'}
+                <span className="text-slate-600 dark:text-slate-500 font-medium">Phone:</span> {product.supplier.phone || '-'}
               </div>
               <div>
-                <span className="text-slate-500">Email:</span> {product.supplier.email || '-'}
+                <span className="text-slate-600 dark:text-slate-500 font-medium">Email:</span> {product.supplier.email || '-'}
               </div>
             </div>
           </div>

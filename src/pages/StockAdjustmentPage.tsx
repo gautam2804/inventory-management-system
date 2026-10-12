@@ -1,21 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useInventory } from '../context/InventoryContext';
-import { Product, StockMovementType } from '../types';
+import { StockMovementType, Product } from '../types';
 import { Button } from '../components/common/Button';
 import { Input } from '../components/common/Input';
 import { Badge } from '../components/common/Badge';
-import { formatCurrency, formatDate } from '../lib/utils';
+import { formatCurrency } from '../lib/utils';
 import {
   ArrowDownLeft,
   ArrowUpRight,
   RefreshCw,
-  Search,
   ScanBarcode,
-  CheckCircle2,
-  AlertTriangle,
   History,
-  Layers,
-  Cpu,
+  AlertTriangle,
 } from 'lucide-react';
 
 interface StockAdjustmentPageProps {
@@ -29,22 +25,21 @@ export const StockAdjustmentPage: React.FC<StockAdjustmentPageProps> = ({
 }) => {
   const { products, recordStockMovement, stockMovements } = useInventory();
 
-  const [selectedProductId, setSelectedProductId] = useState<string>(products[0]?.id || '');
+  const [selectedProductId, setSelectedProductId] = useState<string>('');
   const [movementType, setMovementType] = useState<StockMovementType>('in');
   const [quantity, setQuantity] = useState<number>(1);
   const [reason, setReason] = useState<string>('Supplier Delivery Restock');
   const [notes, setNotes] = useState<string>('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [searchProduct, setSearchProduct] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+
+  // Default to first product if none selected
+  useEffect(() => {
+    if (products.length > 0 && !selectedProductId) {
+      setSelectedProductId(products[0].id);
+    }
+  }, [products, selectedProductId]);
 
   const selectedProduct = products.find((p) => p.id === selectedProductId) || products[0];
-
-  const filteredSelectableProducts = products.filter(
-    (p) =>
-      p.name.toLowerCase().includes(searchProduct.toLowerCase()) ||
-      p.sku.toLowerCase().includes(searchProduct.toLowerCase()) ||
-      (p.barcode && p.barcode.toLowerCase().includes(searchProduct.toLowerCase()))
-  );
 
   const currentStock = selectedProduct ? selectedProduct.quantity : 0;
   let targetStock = currentStock;
@@ -106,8 +101,8 @@ export const StockAdjustmentPage: React.FC<StockAdjustmentPageProps> = ({
       {/* Header and Quick Stats */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl font-bold text-white">Stock Adjustment Workbench</h2>
-          <p className="text-xs text-slate-400">
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white">Stock Adjustment Workbench</h2>
+          <p className="text-xs text-slate-500 dark:text-slate-400">
             Record inward goods receipts, outward customer dispatches, or cycle count audits
           </p>
         </div>
@@ -116,7 +111,7 @@ export const StockAdjustmentPage: React.FC<StockAdjustmentPageProps> = ({
           <Button
             variant="outline"
             size="sm"
-            icon={<ScanBarcode className="w-4 h-4 text-cyan-400" />}
+            icon={<ScanBarcode className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />}
             onClick={onOpenScanner}
           >
             Scan Barcode
@@ -124,7 +119,7 @@ export const StockAdjustmentPage: React.FC<StockAdjustmentPageProps> = ({
           <Button
             variant="secondary"
             size="sm"
-            icon={<History className="w-4 h-4 text-indigo-400" />}
+            icon={<History className="w-4 h-4 text-indigo-500 dark:text-indigo-400" />}
             onClick={onNavigateToHistory}
           >
             Audit History
@@ -134,11 +129,11 @@ export const StockAdjustmentPage: React.FC<StockAdjustmentPageProps> = ({
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left Form (7 Cols) */}
-        <div className="lg:col-span-7 rounded-2xl bg-slate-900 border border-slate-800 p-6 shadow-xl space-y-6">
+        <div className="lg:col-span-7 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 shadow-sm dark:shadow-xl space-y-6 transition-colors duration-200">
           {/* Movement Type Tabs */}
           <div>
-            <label className="block text-xs font-medium text-slate-300 mb-2">
-              Select Action Type <span className="text-rose-400">*</span>
+            <label className="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-2">
+              Select Action Type <span className="text-rose-500">*</span>
             </label>
             <div className="grid grid-cols-3 gap-3">
               <button
@@ -149,13 +144,13 @@ export const StockAdjustmentPage: React.FC<StockAdjustmentPageProps> = ({
                 }}
                 className={`flex flex-col items-center justify-center p-3.5 rounded-xl border text-center transition-all cursor-pointer ${
                   movementType === 'in'
-                    ? 'bg-cyan-500/15 border-cyan-500 text-cyan-300 shadow-lg shadow-cyan-500/10'
-                    : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-slate-200'
+                    ? 'bg-cyan-50 dark:bg-cyan-500/15 border-cyan-500 text-cyan-700 dark:text-cyan-300 shadow-md dark:shadow-cyan-500/10'
+                    : 'bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
                 }`}
               >
-                <ArrowDownLeft className="w-5 h-5 mb-1.5 text-cyan-400" />
+                <ArrowDownLeft className="w-5 h-5 mb-1.5 text-cyan-600 dark:text-cyan-400" />
                 <span className="text-xs font-bold">Stock In (+)</span>
-                <span className="text-[10px] text-slate-400">Receive / Restock</span>
+                <span className="text-[10px] text-slate-500 dark:text-slate-400">Receive / Restock</span>
               </button>
 
               <button
@@ -166,13 +161,13 @@ export const StockAdjustmentPage: React.FC<StockAdjustmentPageProps> = ({
                 }}
                 className={`flex flex-col items-center justify-center p-3.5 rounded-xl border text-center transition-all cursor-pointer ${
                   movementType === 'out'
-                    ? 'bg-rose-500/15 border-rose-500 text-rose-300 shadow-lg shadow-rose-500/10'
-                    : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-slate-200'
+                    ? 'bg-rose-50 dark:bg-rose-500/15 border-rose-500 text-rose-700 dark:text-rose-300 shadow-md dark:shadow-rose-500/10'
+                    : 'bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
                 }`}
               >
-                <ArrowUpRight className="w-5 h-5 mb-1.5 text-rose-400" />
+                <ArrowUpRight className="w-5 h-5 mb-1.5 text-rose-500 dark:text-rose-400" />
                 <span className="text-xs font-bold">Stock Out (-)</span>
-                <span className="text-[10px] text-slate-400">Dispatch / Sale</span>
+                <span className="text-[10px] text-slate-500 dark:text-slate-400">Dispatch / Sale</span>
               </button>
 
               <button
@@ -184,13 +179,13 @@ export const StockAdjustmentPage: React.FC<StockAdjustmentPageProps> = ({
                 }}
                 className={`flex flex-col items-center justify-center p-3.5 rounded-xl border text-center transition-all cursor-pointer ${
                   movementType === 'adjustment'
-                    ? 'bg-indigo-500/15 border-indigo-500 text-indigo-300 shadow-lg shadow-indigo-500/10'
-                    : 'bg-slate-950 border-slate-800 text-slate-400 hover:text-slate-200'
+                    ? 'bg-indigo-50 dark:bg-indigo-500/15 border-indigo-500 text-indigo-700 dark:text-indigo-300 shadow-md dark:shadow-indigo-500/10'
+                    : 'bg-slate-50 dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
                 }`}
               >
-                <RefreshCw className="w-5 h-5 mb-1.5 text-indigo-400" />
+                <RefreshCw className="w-5 h-5 mb-1.5 text-indigo-500 dark:text-indigo-400" />
                 <span className="text-xs font-bold">Audit Correction</span>
-                <span className="text-[10px] text-slate-400">Set exact stock</span>
+                <span className="text-[10px] text-slate-500 dark:text-slate-400">Set exact stock</span>
               </button>
             </div>
           </div>
@@ -198,8 +193,8 @@ export const StockAdjustmentPage: React.FC<StockAdjustmentPageProps> = ({
           <form onSubmit={handleApplyMovement} className="space-y-4">
             {/* Product Selector with Filter */}
             <div className="space-y-1.5">
-              <label className="block text-xs font-medium text-slate-300">
-                Hardware Product <span className="text-rose-400">*</span>
+              <label className="block text-xs font-medium text-slate-700 dark:text-slate-300">
+                Hardware Product <span className="text-rose-500">*</span>
               </label>
               <select
                 value={selectedProductId}
@@ -208,9 +203,9 @@ export const StockAdjustmentPage: React.FC<StockAdjustmentPageProps> = ({
                   const p = products.find((prod) => prod.id === e.target.value);
                   if (p && movementType === 'adjustment') setQuantity(p.quantity);
                 }}
-                className="w-full bg-slate-950 text-slate-100 text-sm rounded-xl border border-slate-700 px-3.5 py-3 focus:outline-none focus:border-cyan-500"
+                className="w-full bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 text-sm rounded-xl border border-slate-300 dark:border-slate-700 px-3.5 py-3 focus:outline-none focus:border-cyan-500 shadow-sm dark:shadow-none"
               >
-                {filteredSelectableProducts.map((p) => (
+                {products.map((p) => (
                   <option key={p.id} value={p.id}>
                     {p.name} — SKU: {p.sku} (Current Stock: {p.quantity})
                   </option>
@@ -238,7 +233,7 @@ export const StockAdjustmentPage: React.FC<StockAdjustmentPageProps> = ({
 
             {/* Real-time Math Alert */}
             {isInvalidRemoval && (
-              <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs flex items-center gap-2">
+              <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/30 text-rose-700 dark:text-rose-400 text-xs flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4 shrink-0" />
                 <span>
                   Insufficient stock! You cannot dispatch {quantity} units because only {currentStock} are available in inventory.
@@ -248,7 +243,7 @@ export const StockAdjustmentPage: React.FC<StockAdjustmentPageProps> = ({
 
             {/* Reason Presets */}
             <div className="space-y-1.5">
-              <label className="block text-xs font-medium text-slate-300">Reason for Stock Update</label>
+              <label className="block text-xs font-medium text-slate-700 dark:text-slate-300">Reason for Stock Update</label>
               <div className="flex flex-wrap gap-1.5 mb-2">
                 {presetReasons[movementType].map((preset) => (
                   <button
@@ -257,8 +252,8 @@ export const StockAdjustmentPage: React.FC<StockAdjustmentPageProps> = ({
                     onClick={() => setReason(preset)}
                     className={`text-[11px] px-2.5 py-1 rounded-lg border transition-colors cursor-pointer ${
                       reason === preset
-                        ? 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40 font-semibold'
-                        : 'bg-slate-950/80 text-slate-400 border-slate-800 hover:text-slate-200'
+                        ? 'bg-cyan-100 dark:bg-cyan-500/20 text-cyan-800 dark:text-cyan-300 border-cyan-300 dark:border-cyan-500/40 font-semibold'
+                        : 'bg-slate-100 dark:bg-slate-950/80 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-800 hover:text-slate-900 dark:hover:text-slate-200'
                     }`}
                   >
                     {preset}
@@ -275,13 +270,13 @@ export const StockAdjustmentPage: React.FC<StockAdjustmentPageProps> = ({
 
             {/* Notes / Reference Code */}
             <div className="space-y-1.5">
-              <label className="block text-xs font-medium text-slate-300">Reference / Notes (Optional)</label>
+              <label className="block text-xs font-medium text-slate-700 dark:text-slate-300">Reference / Notes (Optional)</label>
               <textarea
                 rows={2}
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
                 placeholder="Enter Purchase Order number, RMA ID, or dispatch slip..."
-                className="w-full bg-slate-950 text-slate-100 placeholder-slate-500 text-sm rounded-xl border border-slate-700 px-3.5 py-2.5 focus:outline-none focus:border-cyan-500 custom-scrollbar"
+                className="w-full bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 text-sm rounded-xl border border-slate-300 dark:border-slate-700 px-3.5 py-2.5 focus:outline-none focus:border-cyan-500 custom-scrollbar shadow-sm dark:shadow-none"
               />
             </div>
 
@@ -309,16 +304,16 @@ export const StockAdjustmentPage: React.FC<StockAdjustmentPageProps> = ({
         <div className="lg:col-span-5 space-y-6">
           {/* Target Product Live Card */}
           {selectedProduct && (
-            <div className="rounded-2xl bg-slate-900 border border-slate-800 p-5 shadow-xl space-y-4">
+            <div className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-sm dark:shadow-xl space-y-4 transition-colors duration-200">
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
-                  <span className="text-[10px] font-mono text-cyan-400 bg-cyan-950/60 px-2 py-0.5 rounded border border-cyan-800/40">
+                  <span className="text-[10px] font-mono text-cyan-700 dark:text-cyan-400 bg-cyan-100 dark:bg-cyan-950/60 px-2 py-0.5 rounded border border-cyan-200 dark:border-cyan-800/40">
                     SKU: {selectedProduct.sku}
                   </span>
-                  <h3 className="text-base font-bold text-white mt-1.5 line-clamp-2">
+                  <h3 className="text-base font-bold text-slate-900 dark:text-white mt-1.5 line-clamp-2">
                     {selectedProduct.name}
                   </h3>
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
                     {selectedProduct.brand} &bull; {selectedProduct.model}
                   </p>
                 </div>
@@ -341,15 +336,15 @@ export const StockAdjustmentPage: React.FC<StockAdjustmentPageProps> = ({
               </div>
 
               {/* Math Projection Box */}
-              <div className="p-4 rounded-xl bg-slate-950/90 border border-slate-800 space-y-3">
-                <div className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+              <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950/90 border border-slate-200 dark:border-slate-800 space-y-3">
+                <div className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                   Stock Projection Calculator
                 </div>
 
                 <div className="grid grid-cols-3 gap-2 text-center pt-1">
                   <div>
                     <span className="text-[10px] text-slate-500 block">Current</span>
-                    <span className="text-lg font-bold text-white">{currentStock}</span>
+                    <span className="text-lg font-bold text-slate-900 dark:text-white">{currentStock}</span>
                   </div>
 
                   <div>
@@ -357,10 +352,10 @@ export const StockAdjustmentPage: React.FC<StockAdjustmentPageProps> = ({
                     <span
                       className={`text-lg font-bold ${
                         movementType === 'in'
-                          ? 'text-cyan-400'
+                          ? 'text-cyan-600 dark:text-cyan-400'
                           : movementType === 'out'
-                          ? 'text-rose-400'
-                          : 'text-indigo-400'
+                          ? 'text-rose-600 dark:text-rose-400'
+                          : 'text-indigo-600 dark:text-indigo-400'
                       }`}
                     >
                       {movementType === 'in' ? `+${quantity}` : movementType === 'out' ? `-${quantity}` : `${targetStock - currentStock >= 0 ? '+' : ''}${targetStock - currentStock}`}
@@ -372,10 +367,10 @@ export const StockAdjustmentPage: React.FC<StockAdjustmentPageProps> = ({
                     <span
                       className={`text-lg font-bold ${
                         targetStock < 0
-                          ? 'text-rose-400'
+                          ? 'text-rose-600 dark:text-rose-400'
                           : targetStock <= selectedProduct.min_stock_level
-                          ? 'text-amber-400'
-                          : 'text-emerald-400'
+                          ? 'text-amber-600 dark:text-amber-400'
+                          : 'text-emerald-600 dark:text-emerald-400'
                       }`}
                     >
                       {targetStock}
@@ -383,15 +378,15 @@ export const StockAdjustmentPage: React.FC<StockAdjustmentPageProps> = ({
                   </div>
                 </div>
 
-                <div className="pt-2 border-t border-slate-800 text-xs flex justify-between text-slate-400">
+                <div className="pt-2 border-t border-slate-200 dark:border-slate-800 text-xs flex justify-between text-slate-500 dark:text-slate-400">
                   <span>Unit Cost Basis:</span>
-                  <span className="font-semibold text-slate-200">
+                  <span className="font-semibold text-slate-800 dark:text-slate-200">
                     {formatCurrency(selectedProduct.purchase_price)}
                   </span>
                 </div>
-                <div className="flex justify-between text-xs text-slate-400">
+                <div className="flex justify-between text-xs text-slate-500 dark:text-slate-400">
                   <span>New Total Valuation:</span>
-                  <span className="font-semibold text-emerald-400">
+                  <span className="font-semibold text-emerald-600 dark:text-emerald-400">
                     {formatCurrency(selectedProduct.purchase_price * Math.max(0, targetStock))}
                   </span>
                 </div>
@@ -400,8 +395,8 @@ export const StockAdjustmentPage: React.FC<StockAdjustmentPageProps> = ({
           )}
 
           {/* Quick Recent Activity list */}
-          <div className="rounded-2xl bg-slate-900 border border-slate-800 p-5 shadow-xl space-y-3">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+          <div className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-sm dark:shadow-xl space-y-3 transition-colors duration-200">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
               Latest Movement Stream
             </h4>
             <div className="space-y-2">
@@ -410,19 +405,19 @@ export const StockAdjustmentPage: React.FC<StockAdjustmentPageProps> = ({
                 return (
                   <div
                     key={mov.id}
-                    className="p-2.5 rounded-xl bg-slate-950/70 border border-slate-800/80 flex items-center justify-between text-xs"
+                    className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-950/70 border border-slate-200 dark:border-slate-800/80 flex items-center justify-between text-xs"
                   >
                     <div className="min-w-0 pr-2">
-                      <div className="font-semibold text-white truncate">{prod?.name || 'Component'}</div>
-                      <div className="text-[10px] text-slate-400">{mov.reason}</div>
+                      <div className="font-semibold text-slate-900 dark:text-white truncate">{prod?.name || 'Component'}</div>
+                      <div className="text-[10px] text-slate-500 dark:text-slate-400">{mov.reason}</div>
                     </div>
                     <div
                       className={`font-mono font-bold shrink-0 ${
                         mov.movement_type === 'in'
-                          ? 'text-cyan-400'
+                          ? 'text-cyan-600 dark:text-cyan-400'
                           : mov.movement_type === 'out'
-                          ? 'text-rose-400'
-                          : 'text-indigo-400'
+                          ? 'text-rose-600 dark:text-rose-400'
+                          : 'text-indigo-600 dark:text-indigo-400'
                       }`}
                     >
                       {mov.quantity_changed > 0 ? `+${mov.quantity_changed}` : mov.quantity_changed}

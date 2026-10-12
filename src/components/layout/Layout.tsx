@@ -70,7 +70,7 @@ export const Layout: React.FC<LayoutProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-[#070b12] text-slate-100 flex">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#070b12] text-slate-900 dark:text-slate-100 flex transition-colors duration-200">
       {/* Sidebar */}
       <Sidebar
         currentTab={currentTab}

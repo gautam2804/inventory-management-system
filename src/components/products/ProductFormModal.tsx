@@ -163,11 +163,11 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
           />
 
           <div className="space-y-1.5">
-            <label className="block text-xs font-medium text-slate-300">
-              Category <span className="text-rose-400">*</span>
+            <label className="block text-xs font-medium text-slate-700 dark:text-slate-300">
+              Category <span className="text-rose-500">*</span>
             </label>
             <select
-              className="w-full bg-slate-900/90 text-slate-100 text-sm rounded-xl border border-slate-700/80 px-3.5 py-2.5 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/50"
+              className="w-full bg-white dark:bg-slate-900/90 text-slate-900 dark:text-slate-100 text-sm rounded-xl border border-slate-300 dark:border-slate-700/80 px-3.5 py-2.5 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/50 shadow-sm dark:shadow-none"
               {...register('category_id')}
             >
               {categories.map((c) => (
@@ -176,7 +176,7 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
                 </option>
               ))}
             </select>
-            {errors.category_id && <p className="text-xs text-rose-400">{errors.category_id.message}</p>}
+            {errors.category_id && <p className="text-xs text-rose-500">{errors.category_id.message}</p>}
           </div>
 
           <Input
@@ -197,16 +197,16 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
         </div>
 
         {/* SKU & Barcode Row */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 rounded-xl bg-slate-950/60 border border-slate-800">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 rounded-xl bg-slate-50 dark:bg-slate-950/60 border border-slate-200 dark:border-slate-800">
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <label className="block text-xs font-medium text-slate-300">
-                Unique SKU <span className="text-rose-400">*</span>
+              <label className="block text-xs font-medium text-slate-700 dark:text-slate-300">
+                Unique SKU <span className="text-rose-500">*</span>
               </label>
               <button
                 type="button"
                 onClick={handleAutoGenerateSKU}
-                className="text-[11px] text-cyan-400 hover:text-cyan-300 flex items-center gap-1 font-medium cursor-pointer"
+                className="text-[11px] text-cyan-700 dark:text-cyan-400 hover:text-cyan-800 dark:hover:text-cyan-300 flex items-center gap-1 font-medium cursor-pointer"
               >
                 <Sparkles className="w-3 h-3" /> Auto-Generate
               </button>
@@ -220,13 +220,13 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
 
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <label className="block text-xs font-medium text-slate-300">
+              <label className="block text-xs font-medium text-slate-700 dark:text-slate-300">
                 Barcode / UPC Code
               </label>
               <button
                 type="button"
                 onClick={handleGenerateBarcode}
-                className="text-[11px] text-cyan-400 hover:text-cyan-300 flex items-center gap-1 font-medium cursor-pointer"
+                className="text-[11px] text-cyan-700 dark:text-cyan-400 hover:text-cyan-800 dark:hover:text-cyan-300 flex items-center gap-1 font-medium cursor-pointer"
               >
                 <ScanBarcode className="w-3 h-3" /> Gen Barcode
               </button>
@@ -285,9 +285,9 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
         {/* Supplier & Image URL */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-1.5">
-            <label className="block text-xs font-medium text-slate-300">Associated Supplier</label>
+            <label className="block text-xs font-medium text-slate-700 dark:text-slate-300">Associated Supplier</label>
             <select
-              className="w-full bg-slate-900/90 text-slate-100 text-sm rounded-xl border border-slate-700/80 px-3.5 py-2.5 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/50"
+              className="w-full bg-white dark:bg-slate-900/90 text-slate-900 dark:text-slate-100 text-sm rounded-xl border border-slate-300 dark:border-slate-700/80 px-3.5 py-2.5 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/50 shadow-sm dark:shadow-none"
               {...register('supplier_id')}
             >
               <option value="">No Supplier Assigned</option>
@@ -309,17 +309,17 @@ export const ProductFormModal: React.FC<ProductFormModalProps> = ({
 
         {/* Description */}
         <div className="space-y-1.5">
-          <label className="block text-xs font-medium text-slate-300">Technical Specifications & Notes</label>
+          <label className="block text-xs font-medium text-slate-700 dark:text-slate-300">Technical Specifications & Notes</label>
           <textarea
             rows={3}
-            className="w-full bg-slate-900/90 text-slate-100 placeholder-slate-500 text-sm rounded-xl border border-slate-700/80 px-3.5 py-2.5 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/50 custom-scrollbar"
+            className="w-full bg-white dark:bg-slate-900/90 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 text-sm rounded-xl border border-slate-300 dark:border-slate-700/80 px-3.5 py-2.5 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/50 custom-scrollbar shadow-sm dark:shadow-none"
             placeholder="Detailed specs (clock speed, VRAM, wattage, warranty, socket compatibility)..."
             {...register('description')}
           />
         </div>
 
         {/* Form Actions */}
-        <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
+        <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-200 dark:border-slate-800">
           <Button type="button" variant="ghost" onClick={onClose}>
             Cancel
           </Button>

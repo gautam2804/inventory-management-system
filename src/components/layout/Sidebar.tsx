@@ -63,27 +63,27 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
       {/* Sidebar container */}
       <aside
-        className={`fixed top-0 bottom-0 left-0 z-40 w-68 bg-slate-900/95 border-r border-slate-800/90 flex flex-col transition-transform duration-300 ease-in-out lg:translate-x-0 ${
+        className={`fixed top-0 bottom-0 left-0 z-40 w-68 bg-white/95 dark:bg-slate-900/95 border-r border-slate-200 dark:border-slate-800/90 flex flex-col transition-all duration-300 ease-in-out lg:translate-x-0 ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         {/* Brand Header */}
-        <div className="flex items-center justify-between px-6 py-5 border-b border-slate-800/80">
+        <div className="flex items-center justify-between px-6 py-5 border-b border-slate-200 dark:border-slate-800/80">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 via-cyan-500 to-blue-600 flex items-center justify-center text-white shadow-lg shadow-cyan-500/20">
               <Zap className="w-6 h-6" />
             </div>
             <div>
-              <div className="text-base font-bold tracking-tight text-white flex items-center gap-1.5">
+              <div className="text-base font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-1.5">
                 <span>AT TECH</span>
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-400">DIGITAL</span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-indigo-600 dark:from-cyan-400 dark:to-indigo-400">DIGITAL</span>
               </div>
-              <div className="text-[10px] uppercase font-mono tracking-wider text-slate-400">Inventory Management</div>
+              <div className="text-[10px] uppercase font-mono tracking-wider text-slate-500 dark:text-slate-400">Inventory Management</div>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="lg:hidden p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+            className="lg:hidden p-1.5 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -102,12 +102,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 }}
                 className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 cursor-pointer ${
                   isActive
-                    ? 'bg-gradient-to-r from-indigo-500/20 to-cyan-500/10 text-cyan-400 border border-cyan-500/30 shadow-md font-semibold'
-                    : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/60'
+                    ? 'bg-indigo-50 dark:bg-gradient-to-r dark:from-indigo-500/20 dark:to-cyan-500/10 text-indigo-600 dark:text-cyan-400 border border-indigo-200 dark:border-cyan-500/30 shadow-sm dark:shadow-md font-semibold'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800/60'
                 }`}
               >
                 <div className="flex items-center gap-3">
-                  <span className={isActive ? 'text-cyan-400' : 'text-slate-400'}>
+                  <span className={isActive ? 'text-indigo-600 dark:text-cyan-400' : 'text-slate-400 dark:text-slate-400'}>
                     {item.icon}
                   </span>
                   <span>{item.label}</span>
@@ -116,8 +116,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   <span
                     className={`text-xs px-2 py-0.5 rounded-full font-mono ${
                       isActive
-                        ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30'
-                        : 'bg-slate-800 text-slate-400 border border-slate-700/60'
+                        ? 'bg-indigo-100 dark:bg-cyan-500/20 text-indigo-700 dark:text-cyan-300 border border-indigo-200 dark:border-cyan-500/30'
+                        : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700/60'
                     }`}
                   >
                     {item.badge}
@@ -127,33 +127,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
             );
           })}
         </nav>
-
-        {/* Backend Connection Status Footer */}
-        <div className="p-4 border-t border-slate-800/80 bg-slate-950/40">
-          <div className="p-3 rounded-xl bg-slate-900/90 border border-slate-800 space-y-2">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Database className="w-4 h-4 text-cyan-400" />
-                <span className="text-xs font-semibold text-white">Database</span>
-              </div>
-              <span
-                className={`inline-flex items-center gap-1 text-[10px] font-semibold px-2 py-0.5 rounded-full ${
-                  isSupabaseConnected
-                    ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30'
-                    : 'bg-amber-500/15 text-amber-400 border border-amber-500/30'
-                }`}
-              >
-                <span className={`w-1.5 h-1.5 rounded-full ${isSupabaseConnected ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'}`} />
-                {isSupabaseConnected ? 'Supabase Live' : 'Local Storage'}
-              </span>
-            </div>
-            <p className="text-[11px] text-slate-400 leading-tight">
-              {isSupabaseConnected
-                ? 'Connected to PostgreSQL with Row Level Security.'
-                : 'Offline persistence active. Connect Supabase in Settings.'}
-            </p>
-          </div>
-        </div>
       </aside>
     </>
   );

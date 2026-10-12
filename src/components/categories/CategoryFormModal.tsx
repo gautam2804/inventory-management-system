@@ -101,16 +101,16 @@ export const CategoryFormModal: React.FC<CategoryFormModalProps> = ({
         />
 
         <div className="space-y-1.5">
-          <label className="block text-xs font-medium text-slate-300">Category Description</label>
+          <label className="block text-xs font-medium text-slate-700 dark:text-slate-300">Category Description</label>
           <textarea
             rows={3}
-            className="w-full bg-slate-900 text-slate-100 placeholder-slate-500 text-sm rounded-xl border border-slate-700 px-3.5 py-2.5 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/50 custom-scrollbar"
+            className="w-full bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 text-sm rounded-xl border border-slate-300 dark:border-slate-700 px-3.5 py-2.5 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/50 custom-scrollbar shadow-sm dark:shadow-none"
             placeholder="Description of hardware types included in this category..."
             {...register('description')}
           />
         </div>
 
-        <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
+        <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-200 dark:border-slate-800">
           <Button type="button" variant="ghost" onClick={onClose}>
             Cancel
           </Button>

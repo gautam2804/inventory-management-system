@@ -170,7 +170,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-3 shadow-lg">
+      <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3 shadow-sm dark:shadow-lg transition-colors duration-200">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
           {/* Search Bar */}
           <div className="md:col-span-2">
@@ -193,7 +193,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({
                 setSelectedCategory(e.target.value);
                 setCurrentPage(1);
               }}
-              className="w-full bg-slate-900/90 text-slate-100 text-sm rounded-xl border border-slate-700/80 px-3 py-2.5 focus:outline-none focus:border-cyan-500"
+              className="w-full bg-white dark:bg-slate-900/90 text-slate-900 dark:text-slate-100 text-sm rounded-xl border border-slate-300 dark:border-slate-700/80 px-3 py-2.5 focus:outline-none focus:border-cyan-500 shadow-sm dark:shadow-none"
             >
               <option value="all">All Categories ({categories.length})</option>
               {categories.map((c) => (
@@ -212,7 +212,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({
                 setStockStatus(e.target.value);
                 setCurrentPage(1);
               }}
-              className="w-full bg-slate-900/90 text-slate-100 text-sm rounded-xl border border-slate-700/80 px-3 py-2.5 focus:outline-none focus:border-cyan-500"
+              className="w-full bg-white dark:bg-slate-900/90 text-slate-900 dark:text-slate-100 text-sm rounded-xl border border-slate-300 dark:border-slate-700/80 px-3 py-2.5 focus:outline-none focus:border-cyan-500 shadow-sm dark:shadow-none"
             >
               <option value="all">All Stock Statuses</option>
               <option value="in_stock">Optimal In Stock</option>
@@ -223,16 +223,16 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({
         </div>
 
         {/* Secondary Filter Row */}
-        <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-800/80 text-xs">
+        <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-100 dark:border-slate-800/80 text-xs">
           <div className="flex items-center gap-3">
-            <span className="text-slate-400 font-medium">Supplier:</span>
+            <span className="text-slate-500 dark:text-slate-400 font-medium">Supplier:</span>
             <select
               value={selectedSupplier}
               onChange={(e) => {
                 setSelectedSupplier(e.target.value);
                 setCurrentPage(1);
               }}
-              className="bg-slate-950 text-slate-200 rounded-lg border border-slate-800 px-2.5 py-1 focus:outline-none focus:border-cyan-500"
+              className="bg-slate-100 dark:bg-slate-950 text-slate-800 dark:text-slate-200 rounded-lg border border-slate-200 dark:border-slate-800 px-2.5 py-1 focus:outline-none focus:border-cyan-500"
             >
               <option value="all">All Suppliers</option>
               {suppliers.map((s) => (
@@ -243,21 +243,21 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({
             </select>
           </div>
 
-          <div className="text-slate-400">
-            Found <span className="font-semibold text-white">{filteredProducts.length}</span> hardware products
+          <div className="text-slate-500 dark:text-slate-400">
+            Found <span className="font-semibold text-slate-900 dark:text-white">{filteredProducts.length}</span> hardware products
           </div>
         </div>
       </div>
 
       {/* Products Table Card */}
-      <div className="rounded-2xl bg-slate-900 border border-slate-800 shadow-xl overflow-hidden">
+      <div className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm dark:shadow-xl overflow-hidden transition-colors duration-200">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm text-slate-300">
-            <thead className="bg-slate-950/70 border-b border-slate-800 text-[11px] uppercase tracking-wider text-slate-400 font-semibold select-none">
+          <table className="w-full text-left text-sm text-slate-700 dark:text-slate-300">
+            <thead className="bg-slate-50 dark:bg-slate-950/70 border-b border-slate-200 dark:border-slate-800 text-[11px] uppercase tracking-wider text-slate-600 dark:text-slate-400 font-semibold select-none">
               <tr>
                 <th className="py-3.5 px-4">Product Details</th>
                 <th
-                  className="py-3.5 px-4 cursor-pointer hover:text-white"
+                  className="py-3.5 px-4 cursor-pointer hover:text-slate-900 dark:hover:text-white"
                   onClick={() => toggleSort('sku')}
                 >
                   <div className="flex items-center gap-1">
@@ -267,7 +267,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({
                 </th>
                 <th className="py-3.5 px-4">Category</th>
                 <th
-                  className="py-3.5 px-4 text-right cursor-pointer hover:text-white"
+                  className="py-3.5 px-4 text-right cursor-pointer hover:text-slate-900 dark:hover:text-white"
                   onClick={() => toggleSort('purchase_price')}
                 >
                   <div className="flex items-center justify-end gap-1">
@@ -276,7 +276,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({
                   </div>
                 </th>
                 <th
-                  className="py-3.5 px-4 text-center cursor-pointer hover:text-white"
+                  className="py-3.5 px-4 text-center cursor-pointer hover:text-slate-900 dark:hover:text-white"
                   onClick={() => toggleSort('quantity')}
                 >
                   <div className="flex items-center justify-center gap-1">
@@ -289,13 +289,13 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({
               </tr>
             </thead>
 
-            <tbody className="divide-y divide-slate-800/60">
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
               {paginatedProducts.length === 0 ? (
                 <tr>
                   <td colSpan={7} className="text-center py-12 text-slate-400">
                     <div className="flex flex-col items-center justify-center gap-2">
-                      <Cpu className="w-10 h-10 text-slate-600" />
-                      <p className="text-sm font-medium">No hardware products match your criteria.</p>
+                      <Cpu className="w-10 h-10 text-slate-400 dark:text-slate-600" />
+                      <p className="text-sm font-medium text-slate-600 dark:text-slate-400">No hardware products match your criteria.</p>
                       <button
                         onClick={() => {
                           setSearch('');
@@ -303,7 +303,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({
                           setSelectedSupplier('all');
                           setStockStatus('all');
                         }}
-                        className="text-xs text-cyan-400 hover:underline cursor-pointer"
+                        className="text-xs text-cyan-600 dark:text-cyan-400 hover:underline cursor-pointer"
                       >
                         Reset filters
                       </button>
@@ -319,32 +319,32 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({
                   return (
                     <tr
                       key={p.id}
-                      className="hover:bg-slate-850/60 transition-colors group cursor-pointer"
+                      className="hover:bg-slate-50 dark:hover:bg-slate-850/60 transition-colors group cursor-pointer"
                       onClick={() => onSelectProduct(p)}
                     >
                       {/* Product Name & Brand */}
                       <td className="py-3.5 px-4">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-xl bg-slate-950 border border-slate-800 overflow-hidden shrink-0 flex items-center justify-center">
+                          <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 overflow-hidden shrink-0 flex items-center justify-center">
                             {p.image_url ? (
                               <img
                                 src={p.image_url}
                                 alt={p.name}
                                 className="w-full h-full object-cover"
                                 onError={(e) => {
-                                  (e.target as HTMLImageElement).src =
+                                   (e.target as HTMLImageElement).src =
                                     'https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=400&auto=format&fit=crop&q=80';
                                 }}
                               />
                             ) : (
-                              <Cpu className="w-5 h-5 text-slate-500" />
+                              <Cpu className="w-5 h-5 text-slate-400 dark:text-slate-500" />
                             )}
                           </div>
                           <div className="min-w-0">
-                            <div className="font-semibold text-white group-hover:text-cyan-400 transition-colors line-clamp-1">
+                            <div className="font-semibold text-slate-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors line-clamp-1">
                               {p.name}
                             </div>
-                            <div className="text-[11px] text-slate-400 mt-0.5">
+                            <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
                               {p.brand} &bull; <span className="font-mono">{p.model}</span>
                             </div>
                           </div>
@@ -353,32 +353,32 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({
 
                       {/* SKU & Barcode */}
                       <td className="py-3.5 px-4 font-mono text-xs">
-                        <div className="font-semibold text-cyan-400">{p.sku}</div>
-                        {p.barcode && <div className="text-[11px] text-slate-500">{p.barcode}</div>}
+                        <div className="font-semibold text-cyan-600 dark:text-cyan-400">{p.sku}</div>
+                        {p.barcode && <div className="text-[11px] text-slate-400 dark:text-slate-500">{p.barcode}</div>}
                       </td>
 
                       {/* Category */}
                       <td className="py-3.5 px-4 text-xs">
-                        <span className="px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700/60 inline-flex items-center gap-1">
-                          <Layers className="w-3 h-3 text-cyan-400" />
+                        <span className="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700/60 inline-flex items-center gap-1">
+                          <Layers className="w-3 h-3 text-cyan-600 dark:text-cyan-400" />
                           {cat?.name || 'Hardware'}
                         </span>
                       </td>
 
                       {/* Cost / Retail */}
                       <td className="py-3.5 px-4 text-right">
-                        <div className="font-semibold text-cyan-400 text-xs">
+                        <div className="font-semibold text-cyan-600 dark:text-cyan-400 text-xs">
                           {formatCurrency(p.selling_price)}
                         </div>
-                        <div className="text-[11px] text-slate-500">
+                        <div className="text-[11px] text-slate-400 dark:text-slate-500">
                           Cost: {formatCurrency(p.purchase_price)}
                         </div>
                       </td>
 
                       {/* Stock Level */}
                       <td className="py-3.5 px-4 text-center">
-                        <span className="font-bold text-white font-mono text-base">{p.quantity}</span>
-                        <div className="text-[10px] text-slate-500">Min: {p.min_stock_level}</div>
+                        <span className="font-bold text-slate-900 dark:text-white font-mono text-base">{p.quantity}</span>
+                        <div className="text-[10px] text-slate-400 dark:text-slate-500">Min: {p.min_stock_level}</div>
                       </td>
 
                       {/* Status Badge */}
@@ -402,7 +402,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({
                           <button
                             title="Adjust Stock"
                             onClick={() => onAdjustStock(p)}
-                            className="p-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-cyan-400 hover:text-cyan-300 transition-colors cursor-pointer"
+                            className="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700 text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-300 transition-colors cursor-pointer"
                           >
                             <ArrowDownLeft className="w-4 h-4" />
                           </button>
@@ -410,7 +410,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({
                           <button
                             title="Edit Product"
                             onClick={() => onEditProduct(p)}
-                            className="p-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors cursor-pointer"
+                            className="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
                           >
                             <Edit className="w-4 h-4" />
                           </button>
@@ -418,7 +418,7 @@ export const ProductsPage: React.FC<ProductsPageProps> = ({
                           <button
                             title="Delete Product"
                             onClick={() => setProductToDelete(p)}
-                            className="p-1.5 rounded-lg bg-slate-800/80 hover:bg-rose-900/40 text-slate-400 hover:text-rose-400 transition-colors cursor-pointer"
+                            className="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/80 hover:bg-rose-100 dark:hover:bg-rose-900/40 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 transition-colors cursor-pointer"
                           >
                             <Trash2 className="w-4 h-4" />
                           </button>

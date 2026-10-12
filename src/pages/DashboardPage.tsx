@@ -81,17 +81,17 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
   return (
     <div className="space-y-6">
       {/* Top Banner & Quick Controls */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-slate-800 p-6 shadow-xl">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-white via-indigo-50/50 to-white dark:from-slate-900 dark:via-indigo-950/40 dark:to-slate-900 border border-slate-200 dark:border-slate-800 p-6 shadow-sm dark:shadow-xl transition-colors duration-200">
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 relative z-10">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-semibold mb-2">
-              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-100/70 dark:bg-cyan-500/10 border border-cyan-200 dark:border-cyan-500/20 text-cyan-800 dark:text-cyan-400 text-xs font-semibold mb-2">
+              <span className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse" />
               At Tech Digital &bull; Hardware Intelligence
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
               Inventory Management Overview
             </h2>
-            <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-2xl">
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-1 max-w-2xl">
               Track real-time stock levels, inventory valuations, vendor supplies, and reorder alerts across all computer hardware categories.
             </p>
           </div>
@@ -100,7 +100,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
             <Button
               variant="outline"
               size="sm"
-              icon={<ScanBarcode className="w-4 h-4 text-cyan-400" />}
+              icon={<ScanBarcode className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />}
               onClick={onOpenScanner}
             >
               Scan Barcode
@@ -108,7 +108,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
             <Button
               variant="secondary"
               size="sm"
-              icon={<RefreshCw className="w-4 h-4 text-indigo-400" />}
+              icon={<RefreshCw className="w-4 h-4 text-indigo-500 dark:text-indigo-400" />}
               onClick={() => onOpenStockAdjust()}
             >
               Adjust Stock
@@ -216,15 +216,15 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
       {/* Visual Analytics Section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Category Stock Distribution (2 Cols) */}
-        <div className="lg:col-span-2 rounded-2xl bg-slate-900 border border-slate-800 p-5 shadow-xl flex flex-col justify-between">
+        <div className="lg:col-span-2 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-sm dark:shadow-xl flex flex-col justify-between transition-colors duration-200">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h3 className="text-base font-bold text-white">Stock Distribution by Category</h3>
-              <p className="text-xs text-slate-400">Total units stocked across hardware classifications</p>
+              <h3 className="text-base font-bold text-slate-900 dark:text-white">Stock Distribution by Category</h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Total units stocked across hardware classifications</p>
             </div>
             <button
               onClick={() => onNavigateToTab('reports')}
-              className="text-xs text-cyan-400 hover:text-cyan-300 font-medium flex items-center gap-1 cursor-pointer"
+              className="text-xs text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-300 font-medium flex items-center gap-1 cursor-pointer"
             >
               View Report <ArrowRight className="w-3.5 h-3.5" />
             </button>
@@ -235,23 +235,23 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
               <BarChart data={categoryChartData} margin={{ top: 10, right: 10, left: -20, bottom: 25 }}>
                 <XAxis
                   dataKey="name"
-                  stroke="#64748b"
+                  stroke="#94a3b8"
                   fontSize={11}
                   angle={-30}
                   textAnchor="end"
                   interval={0}
                 />
-                <YAxis stroke="#64748b" fontSize={11} />
+                <YAxis stroke="#94a3b8" fontSize={11} />
                 <Tooltip
                   content={({ active, payload }) => {
                     if (active && payload && payload.length) {
                       const data = payload[0].payload;
                       return (
-                        <div className="rounded-xl bg-slate-950 border border-slate-800 p-3 shadow-xl text-xs">
-                          <p className="font-bold text-white mb-1">{data.fullName}</p>
-                          <p className="text-cyan-400 font-semibold">{data.units} available units</p>
-                          <p className="text-slate-400">{data.count} distinct products</p>
-                          <p className="text-emerald-400 mt-1">Valuation: {formatCurrency(data.valuation)}</p>
+                        <div className="rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 p-3 shadow-xl text-xs text-slate-900 dark:text-white">
+                          <p className="font-bold text-slate-900 dark:text-white mb-1">{data.fullName}</p>
+                          <p className="text-cyan-600 dark:text-cyan-400 font-semibold">{data.units} available units</p>
+                          <p className="text-slate-500 dark:text-slate-400">{data.count} distinct products</p>
+                          <p className="text-emerald-600 dark:text-emerald-400 mt-1">Valuation: {formatCurrency(data.valuation)}</p>
                         </div>
                       );
                     }
@@ -269,10 +269,10 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
         </div>
 
         {/* Stock Status Ratio Donut Chart (1 Col) */}
-        <div className="rounded-2xl bg-slate-900 border border-slate-800 p-5 shadow-xl flex flex-col justify-between">
+        <div className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-sm dark:shadow-xl flex flex-col justify-between transition-colors duration-200">
           <div>
-            <h3 className="text-base font-bold text-white">Stock Health Ratio</h3>
-            <p className="text-xs text-slate-400">Inventory balance versus minimum thresholds</p>
+            <h3 className="text-base font-bold text-slate-900 dark:text-white">Stock Health Ratio</h3>
+            <p className="text-xs text-slate-500 dark:text-slate-400">Inventory balance versus minimum thresholds</p>
           </div>
 
           <div className="h-56 w-full flex items-center justify-center relative my-2">
@@ -296,9 +296,9 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                     if (active && payload && payload.length) {
                       const data = payload[0].payload;
                       return (
-                        <div className="rounded-lg bg-slate-950 border border-slate-800 px-3 py-1.5 shadow-xl text-xs">
-                          <span className="font-semibold text-white">{data.name}: </span>
-                          <span className="text-cyan-400 font-bold">{data.value} items</span>
+                        <div className="rounded-lg bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 px-3 py-1.5 shadow-xl text-xs">
+                          <span className="font-semibold text-slate-900 dark:text-white">{data.name}: </span>
+                          <span className="text-cyan-600 dark:text-cyan-400 font-bold">{data.value} items</span>
                         </div>
                       );
                     }
@@ -310,20 +310,20 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
 
             {/* Center Label */}
             <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-              <span className="text-2xl font-bold text-white">{metrics.totalProducts}</span>
-              <span className="text-[10px] text-slate-400 uppercase tracking-wider">Catalog SKUs</span>
+              <span className="text-2xl font-bold text-slate-900 dark:text-white">{metrics.totalProducts}</span>
+              <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-wider">Catalog SKUs</span>
             </div>
           </div>
 
           {/* Legend */}
-          <div className="space-y-2 pt-2 border-t border-slate-800/80 text-xs">
+          <div className="space-y-2 pt-2 border-t border-slate-100 dark:border-slate-800/80 text-xs">
             {statusPieData.map((item) => (
               <div key={item.name} className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: item.color }} />
-                  <span className="text-slate-300">{item.name}</span>
+                  <span className="text-slate-700 dark:text-slate-300">{item.name}</span>
                 </div>
-                <span className="font-bold text-white">{item.value}</span>
+                <span className="font-bold text-slate-900 dark:text-white">{item.value}</span>
               </div>
             ))}
           </div>
@@ -333,24 +333,24 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
       {/* Low-Stock Action Board & Recent Movements */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Low Stock Priority Table */}
-        <div className="rounded-2xl bg-slate-900 border border-slate-800 p-5 shadow-xl space-y-4">
+        <div className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-sm dark:shadow-xl space-y-4 transition-colors duration-200">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="p-2 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20">
+              <div className="p-2 rounded-xl bg-amber-50 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-500/20">
                 <AlertTriangle className="w-4 h-4" />
               </div>
               <div>
-                <h3 className="text-base font-bold text-white">Low & Out-of-Stock Alerts</h3>
-                <p className="text-xs text-slate-400">Items requiring immediate procurement</p>
+                <h3 className="text-base font-bold text-slate-900 dark:text-white">Low & Out-of-Stock Alerts</h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Items requiring immediate procurement</p>
               </div>
             </div>
-            <span className="text-xs font-mono font-bold px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-400 border border-rose-500/30">
+            <span className="text-xs font-mono font-bold px-2 py-0.5 rounded-full bg-rose-100 dark:bg-rose-500/20 text-rose-700 dark:text-rose-400 border border-rose-200 dark:border-rose-500/30">
               {lowStockProducts.length + outOfStockProducts.length} items
             </span>
           </div>
 
           {lowStockProducts.length === 0 && outOfStockProducts.length === 0 ? (
-            <div className="p-8 text-center text-sm text-slate-400 bg-slate-950/40 rounded-xl border border-slate-800/60">
+            <div className="p-8 text-center text-sm text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-950/40 rounded-xl border border-slate-200 dark:border-slate-800/60">
               No low stock alerts! All items have adequate stock reserves.
             </div>
           ) : (
@@ -358,19 +358,19 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
               {[...outOfStockProducts, ...lowStockProducts].slice(0, 6).map((product) => (
                 <div
                   key={product.id}
-                  className="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800/80 hover:border-slate-700 flex items-center justify-between gap-3 transition-colors"
+                  className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950/70 border border-slate-200 dark:border-slate-800/80 hover:border-slate-300 dark:hover:border-slate-700 flex items-center justify-between gap-3 transition-colors"
                 >
                   <div className="min-w-0">
                     <div
                       onClick={() => onSelectProduct(product)}
-                      className="text-xs font-semibold text-white truncate hover:text-cyan-400 cursor-pointer"
+                      className="text-xs font-semibold text-slate-900 dark:text-white truncate hover:text-cyan-600 dark:hover:text-cyan-400 cursor-pointer"
                     >
                       {product.name}
                     </div>
-                    <div className="text-[11px] text-slate-400 font-mono mt-0.5 flex items-center gap-2">
+                    <div className="text-[11px] text-slate-500 dark:text-slate-400 font-mono mt-0.5 flex items-center gap-2">
                       <span>SKU: {product.sku}</span>
                       <span>&bull;</span>
-                      <span className={product.quantity === 0 ? 'text-rose-400 font-bold' : 'text-amber-400 font-bold'}>
+                      <span className={product.quantity === 0 ? 'text-rose-600 dark:text-rose-400 font-bold' : 'text-amber-600 dark:text-amber-400 font-bold'}>
                         {product.quantity} left
                       </span>
                       <span>(Min: {product.min_stock_level})</span>
@@ -394,27 +394,27 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
         </div>
 
         {/* Recent Stock Movements Stream */}
-        <div className="rounded-2xl bg-slate-900 border border-slate-800 p-5 shadow-xl space-y-4">
+        <div className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 shadow-sm dark:shadow-xl space-y-4 transition-colors duration-200">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="p-2 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+              <div className="p-2 rounded-xl bg-cyan-50 dark:bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-200 dark:border-cyan-500/20">
                 <RefreshCw className="w-4 h-4" />
               </div>
               <div>
-                <h3 className="text-base font-bold text-white">Recent Stock Movements</h3>
-                <p className="text-xs text-slate-400">Live transaction stream and quantity changes</p>
+                <h3 className="text-base font-bold text-slate-900 dark:text-white">Recent Stock Movements</h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Live transaction stream and quantity changes</p>
               </div>
             </div>
             <button
               onClick={() => onNavigateToTab('stock-history')}
-              className="text-xs text-cyan-400 hover:text-cyan-300 font-medium flex items-center gap-1 cursor-pointer"
+              className="text-xs text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-300 font-medium flex items-center gap-1 cursor-pointer"
             >
               Full Log <ArrowRight className="w-3.5 h-3.5" />
             </button>
           </div>
 
           {stockMovements.length === 0 ? (
-            <div className="p-8 text-center text-sm text-slate-400 bg-slate-950/40 rounded-xl border border-slate-800/60">
+            <div className="p-8 text-center text-sm text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-950/40 rounded-xl border border-slate-200 dark:border-slate-800/60">
               No stock movements recorded yet.
             </div>
           ) : (
@@ -424,16 +424,16 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                 return (
                   <div
                     key={mov.id}
-                    className="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800/80 flex items-center justify-between gap-3 text-xs"
+                    className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-950/70 border border-slate-200 dark:border-slate-800/80 flex items-center justify-between gap-3 text-xs"
                   >
                     <div className="flex items-start gap-3 min-w-0">
                       <div
                         className={`p-2 rounded-lg shrink-0 mt-0.5 ${
                           mov.movement_type === 'in'
-                            ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20'
+                            ? 'bg-cyan-50 dark:bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-200 dark:border-cyan-500/20'
                             : mov.movement_type === 'out'
-                            ? 'bg-rose-500/10 text-rose-400 border border-rose-500/20'
-                            : 'bg-indigo-500/10 text-indigo-400 border border-indigo-500/20'
+                            ? 'bg-rose-50 dark:bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-200 dark:border-rose-500/20'
+                            : 'bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-500/20'
                         }`}
                       >
                         {mov.movement_type === 'in' ? (
@@ -446,11 +446,11 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                       </div>
 
                       <div className="min-w-0">
-                        <div className="font-semibold text-white truncate">{prod?.name || 'Hardware Component'}</div>
-                        <div className="text-[11px] text-slate-400 mt-0.5">
+                        <div className="font-semibold text-slate-900 dark:text-white truncate">{prod?.name || 'Hardware Component'}</div>
+                        <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
                           {mov.reason} {mov.notes ? `(${mov.notes})` : ''}
                         </div>
-                        <div className="text-[10px] text-slate-500 font-mono mt-0.5">{formatDate(mov.created_at)}</div>
+                        <div className="text-[10px] text-slate-400 dark:text-slate-500 font-mono mt-0.5">{formatDate(mov.created_at)}</div>
                       </div>
                     </div>
 
@@ -458,15 +458,15 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
                       <div
                         className={`font-mono font-bold text-sm ${
                           mov.movement_type === 'in'
-                            ? 'text-cyan-400'
+                            ? 'text-cyan-600 dark:text-cyan-400'
                             : mov.movement_type === 'out'
-                            ? 'text-rose-400'
-                            : 'text-indigo-400'
+                            ? 'text-rose-600 dark:text-rose-400'
+                            : 'text-indigo-600 dark:text-indigo-400'
                         }`}
                       >
                         {mov.quantity_changed > 0 ? `+${mov.quantity_changed}` : mov.quantity_changed}
                       </div>
-                      <div className="text-[10px] text-slate-400 font-mono">
+                      <div className="text-[10px] text-slate-500 dark:text-slate-400 font-mono">
                         {mov.previous_quantity} &rarr; {mov.updated_quantity}
                       </div>
                     </div>

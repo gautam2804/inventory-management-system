@@ -5,7 +5,6 @@ import * as z from 'zod';
 import { Modal } from '../common/Modal';
 import { Button } from '../common/Button';
 import { Input } from '../common/Input';
-import { Badge } from '../common/Badge';
 import { Product, StockMovementType } from '../../types';
 import { useInventory } from '../../context/InventoryContext';
 import { ArrowDownLeft, ArrowUpRight, RefreshCw, AlertTriangle } from 'lucide-react';
@@ -143,8 +142,8 @@ export const StockAdjustmentModal: React.FC<StockAdjustmentModalProps> = ({
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         {/* Movement Type Radio Selector */}
         <div>
-          <label className="block text-xs font-medium text-slate-300 mb-2">
-            Movement Type <span className="text-rose-400">*</span>
+          <label className="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-2">
+            Movement Type <span className="text-rose-500">*</span>
           </label>
           <div className="grid grid-cols-3 gap-2.5">
             <button
@@ -155,13 +154,13 @@ export const StockAdjustmentModal: React.FC<StockAdjustmentModalProps> = ({
               }}
               className={`flex flex-col items-center justify-center p-3 rounded-xl border text-center transition-all cursor-pointer ${
                 movementType === 'in'
-                  ? 'bg-cyan-500/15 border-cyan-500 text-cyan-300 shadow-lg shadow-cyan-500/10'
-                  : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-slate-200 hover:bg-slate-850'
+                  ? 'bg-cyan-50 dark:bg-cyan-500/15 border-cyan-500 text-cyan-700 dark:text-cyan-300 shadow-md dark:shadow-cyan-500/10'
+                  : 'bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800'
               }`}
             >
-              <ArrowDownLeft className="w-5 h-5 mb-1 text-cyan-400" />
+              <ArrowDownLeft className="w-5 h-5 mb-1 text-cyan-600 dark:text-cyan-400" />
               <span className="text-xs font-semibold">Stock In (+)</span>
-              <span className="text-[10px] text-slate-400">Receive / Restock</span>
+              <span className="text-[10px] text-slate-500 dark:text-slate-400">Receive / Restock</span>
             </button>
 
             <button
@@ -172,13 +171,13 @@ export const StockAdjustmentModal: React.FC<StockAdjustmentModalProps> = ({
               }}
               className={`flex flex-col items-center justify-center p-3 rounded-xl border text-center transition-all cursor-pointer ${
                 movementType === 'out'
-                  ? 'bg-rose-500/15 border-rose-500 text-rose-300 shadow-lg shadow-rose-500/10'
-                  : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-slate-200 hover:bg-slate-850'
+                  ? 'bg-rose-50 dark:bg-rose-500/15 border-rose-500 text-rose-700 dark:text-rose-300 shadow-md dark:shadow-rose-500/10'
+                  : 'bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800'
               }`}
             >
-              <ArrowUpRight className="w-5 h-5 mb-1 text-rose-400" />
+              <ArrowUpRight className="w-5 h-5 mb-1 text-rose-500 dark:text-rose-400" />
               <span className="text-xs font-semibold">Stock Out (-)</span>
-              <span className="text-[10px] text-slate-400">Dispatched / Sold</span>
+              <span className="text-[10px] text-slate-500 dark:text-slate-400">Dispatched / Sold</span>
             </button>
 
             <button
@@ -190,24 +189,24 @@ export const StockAdjustmentModal: React.FC<StockAdjustmentModalProps> = ({
               }}
               className={`flex flex-col items-center justify-center p-3 rounded-xl border text-center transition-all cursor-pointer ${
                 movementType === 'adjustment'
-                  ? 'bg-indigo-500/15 border-indigo-500 text-indigo-300 shadow-lg shadow-indigo-500/10'
-                  : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-slate-200 hover:bg-slate-850'
+                  ? 'bg-indigo-50 dark:bg-indigo-500/15 border-indigo-500 text-indigo-700 dark:text-indigo-300 shadow-md dark:shadow-indigo-500/10'
+                  : 'bg-slate-50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800'
               }`}
             >
-              <RefreshCw className="w-5 h-5 mb-1 text-indigo-400" />
+              <RefreshCw className="w-5 h-5 mb-1 text-indigo-500 dark:text-indigo-400" />
               <span className="text-xs font-semibold">Audit Count</span>
-              <span className="text-[10px] text-slate-400">Set exact stock</span>
+              <span className="text-[10px] text-slate-500 dark:text-slate-400">Set exact stock</span>
             </button>
           </div>
         </div>
 
         {/* Product Selection */}
         <div className="space-y-1.5">
-          <label className="block text-xs font-medium text-slate-300">
-            Select Hardware Product <span className="text-rose-400">*</span>
+          <label className="block text-xs font-medium text-slate-700 dark:text-slate-300">
+            Select Hardware Product <span className="text-rose-500">*</span>
           </label>
           <select
-            className="w-full bg-slate-900 text-slate-100 text-sm rounded-xl border border-slate-700 px-3.5 py-2.5 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/50"
+            className="w-full bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 text-sm rounded-xl border border-slate-300 dark:border-slate-700 px-3.5 py-2.5 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/50 shadow-sm dark:shadow-none"
             {...register('product_id', {
               onChange: (e) => setSelectedProductId(e.target.value),
             })}
@@ -218,41 +217,41 @@ export const StockAdjustmentModal: React.FC<StockAdjustmentModalProps> = ({
               </option>
             ))}
           </select>
-          {errors.product_id && <p className="text-xs text-rose-400">{errors.product_id.message}</p>}
+          {errors.product_id && <p className="text-xs text-rose-500">{errors.product_id.message}</p>}
         </div>
 
         {/* Real-time Stock Math Card */}
         {currentProduct && (
-          <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 grid grid-cols-3 gap-3 text-center">
+          <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-950/80 border border-slate-200 dark:border-slate-800 grid grid-cols-3 gap-3 text-center">
             <div>
-              <span className="text-[10px] text-slate-400 uppercase tracking-wider block">Current Stock</span>
-              <span className="text-lg font-bold text-slate-200">{currentStock} units</span>
+              <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Current Stock</span>
+              <span className="text-lg font-bold text-slate-900 dark:text-slate-200">{currentStock} units</span>
             </div>
             <div>
-              <span className="text-[10px] text-slate-400 uppercase tracking-wider block">
+              <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-wider block">
                 {movementType === 'adjustment' ? 'Target Count' : 'Delta Qty'}
               </span>
               <span
                 className={`text-lg font-bold ${
                   movementType === 'in'
-                    ? 'text-cyan-400'
+                    ? 'text-cyan-600 dark:text-cyan-400'
                     : movementType === 'out'
-                    ? 'text-rose-400'
-                    : 'text-indigo-400'
+                    ? 'text-rose-600 dark:text-rose-400'
+                    : 'text-indigo-600 dark:text-indigo-400'
                 }`}
               >
                 {movementType === 'in' ? `+${enteredQty}` : movementType === 'out' ? `-${enteredQty}` : enteredQty}
               </span>
             </div>
             <div>
-              <span className="text-[10px] text-slate-400 uppercase tracking-wider block">New Quantity</span>
+              <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-wider block">New Quantity</span>
               <span
                 className={`text-lg font-bold ${
                   projectedStock < 0
-                    ? 'text-rose-500'
+                    ? 'text-rose-600 dark:text-rose-500'
                     : projectedStock <= currentProduct.min_stock_level
-                    ? 'text-amber-400'
-                    : 'text-emerald-400'
+                    ? 'text-amber-600 dark:text-amber-400'
+                    : 'text-emerald-600 dark:text-emerald-400'
                 }`}
               >
                 {projectedStock} units
@@ -262,7 +261,7 @@ export const StockAdjustmentModal: React.FC<StockAdjustmentModalProps> = ({
         )}
 
         {isRemovalOverLimit && (
-          <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs flex items-center gap-2">
+          <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/30 text-rose-700 dark:text-rose-400 text-xs flex items-center gap-2">
             <AlertTriangle className="w-4 h-4 shrink-0" />
             <span>Cannot remove {enteredQty} units. Maximum stock available to dispatch is {currentStock}.</span>
           </div>
@@ -287,8 +286,8 @@ export const StockAdjustmentModal: React.FC<StockAdjustmentModalProps> = ({
 
         {/* Reason Presets & Custom Input */}
         <div className="space-y-1.5">
-          <label className="block text-xs font-medium text-slate-300">
-            Movement Reason <span className="text-rose-400">*</span>
+          <label className="block text-xs font-medium text-slate-700 dark:text-slate-300">
+            Movement Reason <span className="text-rose-500">*</span>
           </label>
           <div className="flex flex-wrap gap-1.5 mb-2">
             {presetReasons[movementType].map((preset) => (
@@ -296,7 +295,7 @@ export const StockAdjustmentModal: React.FC<StockAdjustmentModalProps> = ({
                 key={preset}
                 type="button"
                 onClick={() => setValue('reason', preset, { shouldValidate: true })}
-                className="text-[11px] px-2.5 py-1 rounded-lg bg-slate-800/80 hover:bg-slate-700 border border-slate-700/60 text-slate-300 transition-colors cursor-pointer"
+                className="text-[11px] px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700/60 text-slate-700 dark:text-slate-300 transition-colors cursor-pointer"
               >
                 {preset}
               </button>
@@ -311,19 +310,19 @@ export const StockAdjustmentModal: React.FC<StockAdjustmentModalProps> = ({
 
         {/* Reference / Notes */}
         <div className="space-y-1.5">
-          <label className="block text-xs font-medium text-slate-300">
+          <label className="block text-xs font-medium text-slate-700 dark:text-slate-300">
             Reference / PO / Invoice / Notes (Optional)
           </label>
           <textarea
             rows={2}
-            className="w-full bg-slate-900 text-slate-100 placeholder-slate-500 text-sm rounded-xl border border-slate-700 px-3.5 py-2.5 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/50 custom-scrollbar"
+            className="w-full bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 text-sm rounded-xl border border-slate-300 dark:border-slate-700 px-3.5 py-2.5 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/50 custom-scrollbar shadow-sm dark:shadow-none"
             placeholder="e.g. Purchase Order #PO-9912 or Customer RMA ticket..."
             {...register('notes')}
           />
         </div>
 
         {/* Submit Buttons */}
-        <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
+        <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-200 dark:border-slate-800">
           <Button type="button" variant="ghost" onClick={onClose}>
             Cancel
           </Button>

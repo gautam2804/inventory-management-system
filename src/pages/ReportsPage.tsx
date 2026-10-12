@@ -181,8 +181,8 @@ export const ReportsPage: React.FC = () => {
       {/* Top Banner */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl font-bold text-white">Inventory Intelligence & Reports</h2>
-          <p className="text-xs text-slate-400">
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white">Inventory Intelligence & Reports</h2>
+          <p className="text-xs text-slate-500 dark:text-slate-400">
             Exportable audits for financial accounting, procurement reordering, and turnover analytics
           </p>
         </div>
@@ -192,7 +192,7 @@ export const ReportsPage: React.FC = () => {
             <Button
               variant="secondary"
               size="sm"
-              icon={<Download className="w-4 h-4 text-slate-400" />}
+              icon={<Download className="w-4 h-4 text-slate-500 dark:text-slate-400" />}
               onClick={handleExportValuation}
             >
               Export Valuation CSV
@@ -202,7 +202,7 @@ export const ReportsPage: React.FC = () => {
             <Button
               variant="secondary"
               size="sm"
-              icon={<Download className="w-4 h-4 text-slate-400" />}
+              icon={<Download className="w-4 h-4 text-slate-500 dark:text-slate-400" />}
               onClick={handleExportReorder}
             >
               Export Reorder List CSV
@@ -212,7 +212,7 @@ export const ReportsPage: React.FC = () => {
             <Button
               variant="secondary"
               size="sm"
-              icon={<Download className="w-4 h-4 text-slate-400" />}
+              icon={<Download className="w-4 h-4 text-slate-500 dark:text-slate-400" />}
               onClick={handleExportCategory}
             >
               Export Category CSV
@@ -222,7 +222,7 @@ export const ReportsPage: React.FC = () => {
             <Button
               variant="secondary"
               size="sm"
-              icon={<Download className="w-4 h-4 text-slate-400" />}
+              icon={<Download className="w-4 h-4 text-slate-500 dark:text-slate-400" />}
               onClick={handleExportMovements}
             >
               Export Movement CSV
@@ -232,16 +232,16 @@ export const ReportsPage: React.FC = () => {
       </div>
 
       {/* Report Tabs */}
-      <div className="flex flex-wrap gap-2 border-b border-slate-800 pb-3">
+      <div className="flex flex-wrap gap-2 border-b border-slate-200 dark:border-slate-800 pb-3">
         <button
           onClick={() => setActiveTab('valuation')}
           className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
             activeTab === 'valuation'
-              ? 'bg-gradient-to-r from-indigo-500/20 to-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow'
-              : 'text-slate-400 hover:text-white hover:bg-slate-900 border border-transparent'
+              ? 'bg-gradient-to-r from-indigo-50 to-cyan-50 dark:from-indigo-500/20 dark:to-cyan-500/20 text-cyan-800 dark:text-cyan-300 border border-cyan-300 dark:border-cyan-500/40 shadow-sm'
+              : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 border border-transparent'
           }`}
         >
-          <IndianRupee className="w-4 h-4 text-cyan-400" />
+          <IndianRupee className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
           <span>Inventory Valuation</span>
         </button>
 
@@ -249,11 +249,11 @@ export const ReportsPage: React.FC = () => {
           onClick={() => setActiveTab('reorder')}
           className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
             activeTab === 'reorder'
-              ? 'bg-gradient-to-r from-amber-500/20 to-rose-500/20 text-amber-300 border border-amber-500/40 shadow'
-              : 'text-slate-400 hover:text-white hover:bg-slate-900 border border-transparent'
+              ? 'bg-gradient-to-r from-amber-50 to-rose-50 dark:from-amber-500/20 dark:to-rose-500/20 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-500/40 shadow-sm'
+              : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 border border-transparent'
           }`}
         >
-          <AlertTriangle className="w-4 h-4 text-amber-400" />
+          <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400" />
           <span>Low-Stock & Reorder ({reorderData.length})</span>
         </button>
 
@@ -261,11 +261,11 @@ export const ReportsPage: React.FC = () => {
           onClick={() => setActiveTab('category')}
           className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
             activeTab === 'category'
-              ? 'bg-gradient-to-r from-cyan-500/20 to-blue-500/20 text-cyan-300 border border-cyan-500/40 shadow'
-              : 'text-slate-400 hover:text-white hover:bg-slate-900 border border-transparent'
+              ? 'bg-gradient-to-r from-cyan-50 to-blue-50 dark:from-cyan-500/20 dark:to-blue-500/20 text-cyan-800 dark:text-cyan-300 border border-cyan-300 dark:border-cyan-500/40 shadow-sm'
+              : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 border border-transparent'
           }`}
         >
-          <Layers className="w-4 h-4 text-cyan-400" />
+          <Layers className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
           <span>Category Breakdown</span>
         </button>
 
@@ -273,11 +273,11 @@ export const ReportsPage: React.FC = () => {
           onClick={() => setActiveTab('movements')}
           className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
             activeTab === 'movements'
-              ? 'bg-gradient-to-r from-indigo-500/20 to-purple-500/20 text-indigo-300 border border-indigo-500/40 shadow'
-              : 'text-slate-400 hover:text-white hover:bg-slate-900 border border-transparent'
+              ? 'bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-500/20 dark:to-purple-500/20 text-indigo-800 dark:text-indigo-300 border border-indigo-300 dark:border-indigo-500/40 shadow-sm'
+              : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 border border-transparent'
           }`}
         >
-          <ArrowLeftRight className="w-4 h-4 text-indigo-400" />
+          <ArrowLeftRight className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
           <span>Movements & Turnovers</span>
         </button>
       </div>
@@ -297,26 +297,26 @@ export const ReportsPage: React.FC = () => {
         <div className="space-y-4">
           {/* Summary Metric Ribbon */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="p-4 rounded-xl bg-slate-900 border border-slate-800">
-              <span className="text-[11px] uppercase tracking-wider text-slate-400 font-medium">Total Cost Valuation</span>
-              <div className="text-xl font-bold text-white mt-1">{formatCurrency(metrics.totalInventoryValuation)}</div>
+            <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+              <span className="text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 font-medium">Total Cost Valuation</span>
+              <div className="text-xl font-bold text-slate-900 dark:text-white mt-1">{formatCurrency(metrics.totalInventoryValuation)}</div>
             </div>
-            <div className="p-4 rounded-xl bg-slate-900 border border-slate-800">
-              <span className="text-[11px] uppercase tracking-wider text-slate-400 font-medium">Potential Retail Value</span>
-              <div className="text-xl font-bold text-cyan-400 mt-1">{formatCurrency(metrics.potentialRevenue)}</div>
+            <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+              <span className="text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 font-medium">Potential Retail Value</span>
+              <div className="text-xl font-bold text-cyan-600 dark:text-cyan-400 mt-1">{formatCurrency(metrics.potentialRevenue)}</div>
             </div>
-            <div className="p-4 rounded-xl bg-slate-900 border border-slate-800">
-              <span className="text-[11px] uppercase tracking-wider text-slate-400 font-medium">Gross Margin Potential</span>
-              <div className="text-xl font-bold text-emerald-400 mt-1">
+            <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+              <span className="text-[11px] uppercase tracking-wider text-slate-500 dark:text-slate-400 font-medium">Gross Margin Potential</span>
+              <div className="text-xl font-bold text-emerald-600 dark:text-emerald-400 mt-1">
                 {formatCurrency(metrics.potentialRevenue - metrics.totalInventoryValuation)}
               </div>
             </div>
           </div>
 
-          <div className="rounded-2xl bg-slate-900 border border-slate-800 shadow-xl overflow-hidden">
+          <div className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm dark:shadow-xl overflow-hidden transition-colors duration-200">
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm text-slate-300">
-                <thead className="bg-slate-950/70 border-b border-slate-800 text-[11px] uppercase tracking-wider text-slate-400 font-semibold select-none">
+              <table className="w-full text-left text-sm text-slate-700 dark:text-slate-300">
+                <thead className="bg-slate-50 dark:bg-slate-950/70 border-b border-slate-200 dark:border-slate-800 text-[11px] uppercase tracking-wider text-slate-600 dark:text-slate-400 font-semibold select-none">
                   <tr>
                     <th className="py-3.5 px-4">Product & SKU</th>
                     <th className="py-3.5 px-4 text-center">In Stock</th>
@@ -327,19 +327,19 @@ export const ReportsPage: React.FC = () => {
                     <th className="py-3.5 px-4 text-right">Total Retail Value</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-800/60 text-xs">
+                <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60 text-xs">
                   {valuationData.map((d) => (
-                    <tr key={d.id} className="hover:bg-slate-850/50 transition-colors">
+                    <tr key={d.id} className="hover:bg-slate-50 dark:hover:bg-slate-850/50 transition-colors">
                       <td className="py-3 px-4">
-                        <div className="font-semibold text-white">{d.name}</div>
-                        <div className="text-[11px] text-cyan-400 font-mono">{d.sku}</div>
+                        <div className="font-semibold text-slate-900 dark:text-white">{d.name}</div>
+                        <div className="text-[11px] text-cyan-600 dark:text-cyan-400 font-mono">{d.sku}</div>
                       </td>
-                      <td className="py-3 px-4 text-center font-bold text-white">{d.quantity}</td>
-                      <td className="py-3 px-4 text-right font-mono text-slate-400">{formatCurrency(d.purchase_price)}</td>
-                      <td className="py-3 px-4 text-right font-mono text-cyan-400">{formatCurrency(d.selling_price)}</td>
-                      <td className="py-3 px-4 text-right font-bold text-emerald-400">{d.marginPct}%</td>
-                      <td className="py-3 px-4 text-right font-bold text-white">{formatCurrency(d.costValuation)}</td>
-                      <td className="py-3 px-4 text-right font-bold text-cyan-400">{formatCurrency(d.retailValuation)}</td>
+                      <td className="py-3 px-4 text-center font-bold text-slate-900 dark:text-white">{d.quantity}</td>
+                      <td className="py-3 px-4 text-right font-mono text-slate-500 dark:text-slate-400">{formatCurrency(d.purchase_price)}</td>
+                      <td className="py-3 px-4 text-right font-mono text-cyan-600 dark:text-cyan-400">{formatCurrency(d.selling_price)}</td>
+                      <td className="py-3 px-4 text-right font-bold text-emerald-600 dark:text-emerald-400">{d.marginPct}%</td>
+                      <td className="py-3 px-4 text-right font-bold text-slate-900 dark:text-white">{formatCurrency(d.costValuation)}</td>
+                      <td className="py-3 px-4 text-right font-bold text-cyan-600 dark:text-cyan-400">{formatCurrency(d.retailValuation)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -352,28 +352,28 @@ export const ReportsPage: React.FC = () => {
       {/* 2. Reorder Report Content */}
       {activeTab === 'reorder' && (
         <div className="space-y-4">
-          <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-between">
+          <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-between shadow-sm">
             <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20">
+              <div className="p-2.5 rounded-xl bg-amber-50 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-500/20">
                 <AlertTriangle className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-sm font-bold text-white">Recommended Replenishment Inventory</h3>
-                <p className="text-xs text-slate-400">Total items below safety stock: {reorderData.length}</p>
+                <h3 className="text-sm font-bold text-slate-900 dark:text-white">Recommended Replenishment Inventory</h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Total items below safety stock: {reorderData.length}</p>
               </div>
             </div>
             <div className="text-right">
-              <span className="text-[10px] text-slate-400 uppercase tracking-wider block">Estimated Restock Budget</span>
-              <span className="text-base font-bold text-emerald-400">
+              <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase tracking-wider block">Estimated Restock Budget</span>
+              <span className="text-base font-bold text-emerald-600 dark:text-emerald-400">
                 {formatCurrency(reorderData.reduce((acc, d) => acc + d.estimatedReorderCost, 0))}
               </span>
             </div>
           </div>
 
-          <div className="rounded-2xl bg-slate-900 border border-slate-800 shadow-xl overflow-hidden">
+          <div className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm dark:shadow-xl overflow-hidden transition-colors duration-200">
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm text-slate-300">
-                <thead className="bg-slate-950/70 border-b border-slate-800 text-[11px] uppercase tracking-wider text-slate-400 font-semibold select-none">
+              <table className="w-full text-left text-sm text-slate-700 dark:text-slate-300">
+                <thead className="bg-slate-50 dark:bg-slate-950/70 border-b border-slate-200 dark:border-slate-800 text-[11px] uppercase tracking-wider text-slate-600 dark:text-slate-400 font-semibold select-none">
                   <tr>
                     <th className="py-3.5 px-4">Product Details</th>
                     <th className="py-3.5 px-4 text-center">Status</th>
@@ -384,23 +384,23 @@ export const ReportsPage: React.FC = () => {
                     <th className="py-3.5 px-4 text-right">Estimated Order Cost</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-800/60 text-xs">
+                <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60 text-xs">
                   {reorderData.map((d) => (
-                    <tr key={d.id} className="hover:bg-slate-850/50 transition-colors">
+                    <tr key={d.id} className="hover:bg-slate-50 dark:hover:bg-slate-850/50 transition-colors">
                       <td className="py-3 px-4">
-                        <div className="font-semibold text-white">{d.name}</div>
-                        <div className="text-[11px] text-cyan-400 font-mono">SKU: {d.sku} &bull; {d.category}</div>
+                        <div className="font-semibold text-slate-900 dark:text-white">{d.name}</div>
+                        <div className="text-[11px] text-cyan-600 dark:text-cyan-400 font-mono">SKU: {d.sku} &bull; {d.category}</div>
                       </td>
                       <td className="py-3 px-4 text-center">
                         <Badge variant={d.isOut ? 'out_of_stock' : 'low_stock'} size="sm">
                           {d.isOut ? 'Out of Stock' : 'Low Stock'}
                         </Badge>
                       </td>
-                      <td className="py-3 px-4 text-center font-bold text-white">{d.quantity}</td>
-                      <td className="py-3 px-4 text-center text-slate-400">{d.min_stock_level}</td>
-                      <td className="py-3 px-4 text-center font-bold text-cyan-400">+{d.unitsDeficit} units</td>
-                      <td className="py-3 px-4 text-right font-mono text-slate-400">{formatCurrency(d.purchase_price)}</td>
-                      <td className="py-3 px-4 text-right font-bold text-emerald-400">{formatCurrency(d.estimatedReorderCost)}</td>
+                      <td className="py-3 px-4 text-center font-bold text-slate-900 dark:text-white">{d.quantity}</td>
+                      <td className="py-3 px-4 text-center text-slate-500 dark:text-slate-400">{d.min_stock_level}</td>
+                      <td className="py-3 px-4 text-center font-bold text-cyan-600 dark:text-cyan-400">+{d.unitsDeficit} units</td>
+                      <td className="py-3 px-4 text-right font-mono text-slate-500 dark:text-slate-400">{formatCurrency(d.purchase_price)}</td>
+                      <td className="py-3 px-4 text-right font-bold text-emerald-600 dark:text-emerald-400">{formatCurrency(d.estimatedReorderCost)}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -412,10 +412,10 @@ export const ReportsPage: React.FC = () => {
 
       {/* 3. Category Breakdown Content */}
       {activeTab === 'category' && (
-        <div className="rounded-2xl bg-slate-900 border border-slate-800 shadow-xl overflow-hidden">
+        <div className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm dark:shadow-xl overflow-hidden transition-colors duration-200">
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm text-slate-300">
-              <thead className="bg-slate-950/70 border-b border-slate-800 text-[11px] uppercase tracking-wider text-slate-400 font-semibold select-none">
+            <table className="w-full text-left text-sm text-slate-700 dark:text-slate-300">
+              <thead className="bg-slate-50 dark:bg-slate-950/70 border-b border-slate-200 dark:border-slate-800 text-[11px] uppercase tracking-wider text-slate-600 dark:text-slate-400 font-semibold select-none">
                 <tr>
                   <th className="py-3.5 px-4">Category Name</th>
                   <th className="py-3.5 px-4 text-center">Prefix Code</th>
@@ -426,16 +426,16 @@ export const ReportsPage: React.FC = () => {
                   <th className="py-3.5 px-4 text-right">Gross Margin</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60 text-xs">
+              <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60 text-xs">
                 {categoryReportData.map((d) => (
-                  <tr key={d.id} className="hover:bg-slate-850/50 transition-colors">
-                    <td className="py-3 px-4 font-semibold text-white">{d.name}</td>
-                    <td className="py-3 px-4 text-center font-mono text-cyan-400">{d.code}</td>
-                    <td className="py-3 px-4 text-center font-bold text-slate-300">{d.skuCount}</td>
-                    <td className="py-3 px-4 text-center font-bold text-white">{d.totalUnits}</td>
-                    <td className="py-3 px-4 text-right font-bold text-slate-200">{formatCurrency(d.totalCost)}</td>
-                    <td className="py-3 px-4 text-right font-bold text-cyan-400">{formatCurrency(d.totalRetail)}</td>
-                    <td className="py-3 px-4 text-right font-bold text-emerald-400">+{formatCurrency(d.potentialMargin)}</td>
+                  <tr key={d.id} className="hover:bg-slate-50 dark:hover:bg-slate-850/50 transition-colors">
+                    <td className="py-3 px-4 font-semibold text-slate-900 dark:text-white">{d.name}</td>
+                    <td className="py-3 px-4 text-center font-mono text-cyan-600 dark:text-cyan-400">{d.code}</td>
+                    <td className="py-3 px-4 text-center font-bold text-slate-700 dark:text-slate-300">{d.skuCount}</td>
+                    <td className="py-3 px-4 text-center font-bold text-slate-900 dark:text-white">{d.totalUnits}</td>
+                    <td className="py-3 px-4 text-right font-bold text-slate-800 dark:text-slate-200">{formatCurrency(d.totalCost)}</td>
+                    <td className="py-3 px-4 text-right font-bold text-cyan-600 dark:text-cyan-400">{formatCurrency(d.totalRetail)}</td>
+                    <td className="py-3 px-4 text-right font-bold text-emerald-600 dark:text-emerald-400">+{formatCurrency(d.potentialMargin)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -446,10 +446,10 @@ export const ReportsPage: React.FC = () => {
 
       {/* 4. Movements Analysis Content */}
       {activeTab === 'movements' && (
-        <div className="rounded-2xl bg-slate-900 border border-slate-800 shadow-xl overflow-hidden">
+        <div className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm dark:shadow-xl overflow-hidden transition-colors duration-200">
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm text-slate-300">
-              <thead className="bg-slate-950/70 border-b border-slate-800 text-[11px] uppercase tracking-wider text-slate-400 font-semibold select-none">
+            <table className="w-full text-left text-sm text-slate-700 dark:text-slate-300">
+              <thead className="bg-slate-50 dark:bg-slate-950/70 border-b border-slate-200 dark:border-slate-800 text-[11px] uppercase tracking-wider text-slate-600 dark:text-slate-400 font-semibold select-none">
                 <tr>
                   <th className="py-3.5 px-4">Date</th>
                   <th className="py-3.5 px-4">Component & SKU</th>
@@ -460,27 +460,27 @@ export const ReportsPage: React.FC = () => {
                   <th className="py-3.5 px-4 text-right">Notes</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-800/60 text-xs">
+              <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60 text-xs">
                 {movementReportData.map((d) => (
-                  <tr key={d.id} className="hover:bg-slate-850/50 transition-colors">
-                    <td className="py-3 px-4 font-mono text-slate-400">{d.date}</td>
-                    <td className="py-3 px-4 font-semibold text-white">
+                  <tr key={d.id} className="hover:bg-slate-50 dark:hover:bg-slate-850/50 transition-colors">
+                    <td className="py-3 px-4 font-mono text-slate-500 dark:text-slate-400">{d.date}</td>
+                    <td className="py-3 px-4 font-semibold text-slate-900 dark:text-white">
                       {d.product}
-                      <span className="block text-[10px] text-cyan-400 font-mono">{d.sku}</span>
+                      <span className="block text-[10px] text-cyan-600 dark:text-cyan-400 font-mono">{d.sku}</span>
                     </td>
                     <td className="py-3 px-4 text-center">
                       <Badge variant={d.type} size="sm">
                         {d.type === 'in' ? 'Stock In' : d.type === 'out' ? 'Stock Out' : 'Audit'}
                       </Badge>
                     </td>
-                    <td className="py-3 px-4 text-right font-mono font-bold text-white">
+                    <td className="py-3 px-4 text-right font-mono font-bold text-slate-900 dark:text-white">
                       {d.delta > 0 ? `+${d.delta}` : d.delta}
                     </td>
-                    <td className="py-3 px-4 text-center font-mono text-slate-400">
+                    <td className="py-3 px-4 text-center font-mono text-slate-500 dark:text-slate-400">
                       {d.from} &rarr; {d.to}
                     </td>
-                    <td className="py-3 px-4 font-medium text-slate-300">{d.reason}</td>
-                    <td className="py-3 px-4 text-right font-mono text-slate-500">{d.notes}</td>
+                    <td className="py-3 px-4 font-medium text-slate-800 dark:text-slate-300">{d.reason}</td>
+                    <td className="py-3 px-4 text-right font-mono text-slate-500 dark:text-slate-500">{d.notes}</td>
                   </tr>
                 ))}
               </tbody>

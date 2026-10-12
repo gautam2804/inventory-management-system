@@ -23,11 +23,11 @@ export const Pagination: React.FC<PaginationProps> = ({
   const endItem = Math.min(currentPage * pageSize, totalItems);
 
   return (
-    <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-4 py-3 border-t border-slate-800 text-xs text-slate-400">
+    <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-4 py-3 border-t border-slate-200 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400">
       <div>
-        Showing <span className="font-semibold text-slate-200">{startItem}</span> to{' '}
-        <span className="font-semibold text-slate-200">{endItem}</span> of{' '}
-        <span className="font-semibold text-slate-200">{totalItems}</span> results
+        Showing <span className="font-semibold text-slate-900 dark:text-slate-200">{startItem}</span> to{' '}
+        <span className="font-semibold text-slate-900 dark:text-slate-200">{endItem}</span> of{' '}
+        <span className="font-semibold text-slate-900 dark:text-slate-200">{totalItems}</span> results
       </div>
 
       <div className="flex items-center gap-2">
@@ -55,8 +55,8 @@ export const Pagination: React.FC<PaginationProps> = ({
                   onClick={() => onPageChange(pageNum)}
                   className={`w-8 h-8 rounded-lg font-medium transition-colors cursor-pointer ${
                     currentPage === pageNum
-                      ? 'bg-gradient-to-r from-indigo-500 to-cyan-500 text-white font-semibold'
-                      : 'hover:bg-slate-800 text-slate-400 hover:text-slate-200'
+                      ? 'bg-gradient-to-r from-indigo-600 to-cyan-600 text-white font-semibold shadow-sm'
+                      : 'hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
                   }`}
                 >
                   {pageNum}
@@ -64,7 +64,7 @@ export const Pagination: React.FC<PaginationProps> = ({
               );
             }
             if (pageNum === currentPage - 2 || pageNum === currentPage + 2) {
-              return <span key={pageNum} className="px-1 text-slate-600">...</span>;
+              return <span key={pageNum} className="px-1 text-slate-400 dark:text-slate-600">...</span>;
             }
             return null;
           })}

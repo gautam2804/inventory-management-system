@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { NotificationProvider } from './context/NotificationContext';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { InventoryProvider } from './context/InventoryContext';
+import { ThemeProvider } from './context/ThemeContext';
 import { Layout } from './components/layout/Layout';
 import { NavItemKey } from './components/layout/Sidebar';
 import { AuthPage } from './pages/AuthPage';
@@ -34,7 +35,7 @@ const MainApplication: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#070b12] flex items-center justify-center text-cyan-400">
+      <div className="min-h-screen bg-slate-50 dark:bg-[#070b12] flex items-center justify-center text-cyan-600 dark:text-cyan-400">
         <Loader2 className="w-8 h-8 animate-spin" />
       </div>
     );
@@ -150,13 +151,15 @@ const MainApplication: React.FC = () => {
 
 export function App() {
   return (
-    <NotificationProvider>
-      <AuthProvider>
-        <InventoryProvider>
-          <MainApplication />
-        </InventoryProvider>
-      </AuthProvider>
-    </NotificationProvider>
+    <ThemeProvider>
+      <NotificationProvider>
+        <AuthProvider>
+          <InventoryProvider>
+            <MainApplication />
+          </InventoryProvider>
+        </AuthProvider>
+      </NotificationProvider>
+    </ThemeProvider>
   );
 }
 
