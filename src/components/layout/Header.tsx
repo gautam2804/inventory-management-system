@@ -1,0 +1,188 @@
+import React, { useState, useRef, useEffect } from 'react';
+import {
+  Menu,
+  ScanBarcode,
+  Plus,
+  ArrowLeftRight,
+  User,
+  LogOut,
+  ShieldCheck,
+  ChevronDown,
+} from 'lucide-react';
+import { Button } from '../common/Button';
+import { NotificationsDropdown } from './NotificationsDropdown';
+import { useAuth } from '../../context/AuthContext';
+import { Product } from '../../types';
+import { NavItemKey } from './Sidebar';
+
+interface HeaderProps {
+  currentTab: NavItemKey;
+  onOpenSidebar: () => void;
+  onOpenScanner: () => void;
+  onOpenAddProduct: () => void;
+  onOpenQuickStock: () => void;
+  onSelectProduct: (product: Product) => void;
+  onNavigateToStock: (product: Product) => void;
+  onNavigateToTab: (tab: NavItemKey) => void;
+}
+
+export const Header: React.FC<HeaderProps> = ({
+  currentTab,
+  onOpenSidebar,
+  onOpenScanner,
+  onOpenAddProduct,
+  onOpenQuickStock,
+  onSelectProduct,
+  onNavigateToStock,
+  onNavigateToTab,
+}) => {
+  const { user, logout, isDemoMode } = useAuth();
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const userMenuRef = useRef<HTMLDivElement>(null);
+
+  // Close profile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
+        setUserMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const pageTitles: Record<NavItemKey, { title: string; subtitle: string }> = {
+    dashboard: { title: 'Executive Dashboard', subtitle: 'Live inventory metrics, stock health & activity' },
+    products: { title: 'Hardware Catalog', subtitle: 'Manage computer hardware products, SKUs & pricing' },
+    categories: { title: 'Hardware Categories', subtitle: 'Organize components, peripherals & accessories' },
+    'stock-adjustment': { title: 'Stock Management', subtitle: 'Inward receipts, outward dispatches & audits' },
+    'stock-history': { title: 'Movement History', subtitle: 'Immutable audit logs of all inventory transitions' },
+    suppliers: { title: 'Vendor & Supplier Directory', subtitle: 'Distributors, authorized vendors & procurement' },
+    reports: { title: 'Reports & Analytics', subtitle: 'Valuation, low-stock reports and CSV exports' },
+    settings: { title: 'System & Supabase Settings', subtitle: 'Database connection, schema setup & seed data' },
+  };
+
+  const activePage = pageTitles[currentTab] || { title: 'Dashboard', subtitle: '' };
+
+  return (
+    <header className="sticky top-0 z-30 bg-slate-950/80 backdrop-blur-md border-b border-slate-800/80 px-4 sm:px-6 py-3.5 flex items-center justify-between gap-4">
+      {/* Left: Mobile hamburger + Page Title */}
+      <div className="flex items-center gap-3">
+        <button
+          onClick={onOpenSidebar}
+          className="lg:hidden p-2 rounded-xl bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
+        >
+          <Menu className="w-5 h-5" />
+        </button>
+
+        <div>
+          <h1 className="text-lg sm:text-xl font-bold tracking-tight text-white flex items-center gap-2">
+            {activePage.title}
+          </h1>
+          <p className="text-xs text-slate-400 hidden sm:block">{activePage.subtitle}</p>
+        </div>
+      </div>
+
+      {/* Right: Actions, Scanner, Alerts, Profile */}
+      <div className="flex items-center gap-2.5 sm:gap-3">
+        {/* Quick Barcode Scanner Trigger */}
+        <button
+          onClick={onOpenScanner}
+          className="flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-900/90 hover:bg-slate-800/90 border border-slate-800 text-cyan-400 hover:text-cyan-300 transition-all cursor-pointer shadow-sm"
+          title="Open Barcode Scanner (Press Ctrl+K)"
+        >
+          <ScanBarcode className="w-4 h-4" />
+          <span className="text-xs font-medium hidden md:inline">Scan Barcode / SKU</span>
+          <kbd className="hidden lg:inline text-[10px] bg-slate-950 px-1.5 py-0.5 rounded border border-slate-700 font-mono text-slate-400">
+            Ctrl+K
+          </kbd>
+        </button>
+
+        {/* Quick Stock Adjustment */}
+        <button
+          onClick={onOpenQuickStock}
+          className="hidden md:flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white transition-colors cursor-pointer text-xs font-medium"
+        >
+          <ArrowLeftRight className="w-3.5 h-3.5 text-indigo-400" />
+          <span>Adjust Stock</span>
+        </button>
+
+        {/* Quick Add Product */}
+        <Button
+          size="sm"
+          variant="primary"
+          onClick={onOpenAddProduct}
+          icon={<Plus className="w-4 h-4" />}
+          className="shadow-cyan-500/10"
+        >
+          <span className="hidden sm:inline">Add Product</span>
+          <span className="sm:hidden">Add</span>
+        </Button>
+
+        {/* Low-Stock Notifications Bell */}
+        <NotificationsDropdown
+          onSelectProduct={onSelectProduct}
+          onNavigateToStock={onNavigateToStock}
+        />
+
+        {/* Admin Profile Menu */}
+        <div className="relative" ref={userMenuRef}>
+          <button
+            onClick={() => setUserMenuOpen(!userMenuOpen)}
+            className="flex items-center gap-2 p-1.5 pr-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-300 transition-colors cursor-pointer"
+          >
+            <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-indigo-500 to-cyan-500 flex items-center justify-center text-white text-xs font-bold shadow-inner">
+              {user?.full_name ? user.full_name.charAt(0) : 'A'}
+            </div>
+            <div className="hidden xl:block text-left">
+              <div className="text-xs font-semibold text-white leading-tight">
+                {user?.full_name || 'Admin'}
+              </div>
+              <div className="text-[10px] text-cyan-400 font-medium">Hardware Admin</div>
+            </div>
+            <ChevronDown className="w-3.5 h-3.5 text-slate-400 hidden sm:block" />
+          </button>
+
+          {userMenuOpen && (
+            <div className="absolute right-0 mt-2 w-60 rounded-2xl bg-slate-900 border border-slate-800 shadow-2xl z-50 overflow-hidden divide-y divide-slate-800/80">
+              <div className="p-3.5 bg-slate-950/40">
+                <div className="text-xs font-semibold text-white">{user?.full_name || 'Admin User'}</div>
+                <div className="text-[11px] text-slate-400 truncate">{user?.email || 'admin@hardwarepro.com'}</div>
+                <div className="mt-2 flex items-center gap-1.5 text-[10px] font-semibold text-cyan-400 bg-cyan-950/60 px-2 py-0.5 rounded border border-cyan-800/40 w-fit">
+                  <ShieldCheck className="w-3 h-3" />
+                  <span>Admin Privileges</span>
+                </div>
+              </div>
+
+              <div className="p-1">
+                <button
+                  onClick={() => {
+                    setUserMenuOpen(false);
+                    onNavigateToTab('settings');
+                  }}
+                  className="w-full flex items-center gap-2.5 px-3 py-2 text-xs text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg transition-colors cursor-pointer"
+                >
+                  <User className="w-3.5 h-3.5 text-slate-400" />
+                  <span>Account & Settings</span>
+                </button>
+              </div>
+
+              <div className="p-1">
+                <button
+                  onClick={() => {
+                    setUserMenuOpen(false);
+                    logout();
+                  }}
+                  className="w-full flex items-center gap-2.5 px-3 py-2 text-xs text-rose-400 hover:text-rose-300 hover:bg-rose-500/10 rounded-lg transition-colors cursor-pointer"
+                >
+                  <LogOut className="w-3.5 h-3.5" />
+                  <span>Sign Out</span>
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </header>
+  );
+};
