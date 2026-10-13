@@ -3,16 +3,16 @@ import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { Button } from '../components/common/Button';
 import { Input } from '../components/common/Input';
-import { Zap, ShieldCheck, Lock, User, ArrowRight, CheckCircle2, Sun, Moon } from 'lucide-react';
+import { Zap, ShieldCheck, Lock, User, CheckCircle2, Sun, Moon } from 'lucide-react';
 
 export const AuthPage: React.FC = () => {
-  const { login, signUp, loginAsAdmin, isConfigured } = useAuth();
+  const { login, signUp } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const [mode, setMode] = useState<'signin' | 'signup'>('signin');
 
-  const [emailOrUser, setEmailOrUser] = useState('rishi');
-  const [password, setPassword] = useState('rishi24');
-  const [fullName, setFullName] = useState('Rishi');
+  const [emailOrUser, setEmailOrUser] = useState('');
+  const [password, setPassword] = useState('');
+  const [fullName, setFullName] = useState('');
 
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -28,7 +28,7 @@ export const AuthPage: React.FC = () => {
       const res = await login(emailOrUser, password);
       setLoading(false);
       if (!res.success) {
-        setErrorMsg(res.error || 'Invalid credentials. Enter rishi and rishi24.');
+        setErrorMsg(res.error || 'Invalid credentials. Please verify your username/email and password.');
       }
     } else {
       const emailToUse = emailOrUser.includes('@') ? emailOrUser : `${emailOrUser}@attechdigital.com`;
@@ -40,10 +40,6 @@ export const AuthPage: React.FC = () => {
         setSuccessMsg(res.message || 'Admin account successfully registered!');
       }
     }
-  };
-
-  const handleInstantAdminLogin = () => {
-    loginAsAdmin('rishi@attechdigital.com', 'Rishi');
   };
 
   return (
@@ -129,7 +125,7 @@ export const AuthPage: React.FC = () => {
             </h2>
             <p className="text-xs text-slate-500 dark:text-slate-400">
               {mode === 'signin'
-                ? 'Sign in as administrator to manage hardware inventory & suppliers.'
+                ? 'Sign in with your administrator credentials to manage inventory & suppliers.'
                 : 'Register a new administrator account in Supabase.'}
             </p>
           </div>
@@ -151,7 +147,7 @@ export const AuthPage: React.FC = () => {
             {mode === 'signup' && (
               <Input
                 label="Full Name"
-                placeholder="Rishi"
+                placeholder="Enter full name"
                 leftIcon={<User className="w-4 h-4" />}
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
@@ -162,21 +158,23 @@ export const AuthPage: React.FC = () => {
             <Input
               label="Admin Username or Email"
               type="text"
-              placeholder="rishi"
+              placeholder="Enter username or email"
               leftIcon={<User className="w-4 h-4" />}
               value={emailOrUser}
               onChange={(e) => setEmailOrUser(e.target.value)}
               required
+              autoComplete="username"
             />
 
             <Input
               label="Password"
               type="password"
-              placeholder="rishi24"
+              placeholder="Enter password"
               leftIcon={<Lock className="w-4 h-4" />}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              autoComplete="current-password"
             />
 
             <Button
@@ -186,25 +184,9 @@ export const AuthPage: React.FC = () => {
               className="w-full mt-2"
               isLoading={loading}
             >
-              {mode === 'signin' ? 'Sign In (rishi / rishi24)' : 'Register Admin'}
+              {mode === 'signin' ? 'Sign In as Administrator' : 'Register Admin'}
             </Button>
           </form>
-
-          {/* Quick 1-Click Access Option */}
-          <div className="pt-3 border-t border-slate-200 dark:border-slate-800 space-y-3">
-            <button
-              type="button"
-              onClick={handleInstantAdminLogin}
-              className="w-full py-2.5 px-4 rounded-xl bg-slate-50 dark:bg-slate-950 hover:bg-slate-100 dark:hover:bg-slate-850 border border-cyan-500/30 text-xs font-semibold text-cyan-700 dark:text-cyan-400 hover:text-cyan-800 dark:hover:text-cyan-300 transition-colors cursor-pointer flex items-center justify-center gap-2 shadow-inner group"
-            >
-              <span>Instant 1-Click Login as Rishi</span>
-              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-            </button>
-
-            <div className="text-center text-[11px] text-slate-500 dark:text-slate-400">
-              Admin: <span className="text-slate-800 dark:text-slate-200 font-semibold">rishi</span> &bull; Password: <span className="text-slate-800 dark:text-slate-200 font-semibold font-mono">rishi24</span>
-            </div>
-          </div>
         </div>
       </div>
     </div>

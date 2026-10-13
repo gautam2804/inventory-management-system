@@ -38,43 +38,50 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     const supabase = getSupabase();
     if (!configured || !supabase) {
-      // Default to Rishi admin
-      const defaultAdmin: AdminUser = {
-        id: '88b44147-87ee-48f0-a118-f120783a2ae8',
-        email: 'rishi@attechdigital.com',
-        role: 'admin',
-        full_name: 'Rishi',
-      };
-      setUser(defaultAdmin);
-      localStorage.setItem('hw_admin_session', JSON.stringify(defaultAdmin));
+      setUser(null);
       setIsDemoMode(true);
       setLoading(false);
       return;
     }
 
-    // 2. Check Supabase Auth session
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    // 2. Check Supabase Auth session & fetch dynamic profile from Supabase
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
       if (session?.user) {
+        // Fetch dynamic profile from profiles table
+        const { data: profileData } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', session.user.id)
+          .maybeSingle();
+
         const adminObj: AdminUser = {
           id: session.user.id,
-          email: session.user.email || 'rishi@attechdigital.com',
-          role: 'admin',
-          full_name: session.user.user_metadata?.full_name || 'Rishi',
+          email: profileData?.email || session.user.email || 'rishiredekar824@gmail.com',
+          role: profileData?.role || 'admin',
+          full_name: profileData?.full_name || session.user.user_metadata?.full_name || 'Rishi',
         };
         setUser(adminObj);
         localStorage.setItem('hw_admin_session', JSON.stringify(adminObj));
         setIsDemoMode(false);
+      } else {
+        setUser(null);
       }
       setLoading(false);
     });
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
       if (session?.user) {
+        const { data: profileData } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', session.user.id)
+          .maybeSingle();
+
         const adminObj: AdminUser = {
           id: session.user.id,
-          email: session.user.email || 'rishi@attechdigital.com',
-          role: 'admin',
-          full_name: session.user.user_metadata?.full_name || 'Rishi',
+          email: profileData?.email || session.user.email || 'rishiredekar824@gmail.com',
+          role: profileData?.role || 'admin',
+          full_name: profileData?.full_name || session.user.user_metadata?.full_name || 'Rishi',
         };
         setUser(adminObj);
         localStorage.setItem('hw_admin_session', JSON.stringify(adminObj));
@@ -88,40 +95,111 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
   }, [configured]);
 
-  // Sign In function supporting both username "rishi" and email "rishi@attechdigital.com"
+  // Dynamic Login supporting username "Rishi" or email "rishiredekar824@gmail.com" from Supabase profiles
   const login = async (emailOrUser: string, pass: string): Promise<{ success: boolean; error?: string }> => {
-    const inputClean = emailOrUser.trim().toLowerCase();
+    const inputClean = emailOrUser.trim();
     const cleanPass = pass.trim();
 
     if (!inputClean || !cleanPass) {
       return { success: false, error: 'Please enter your username/email and password.' };
     }
 
-    // Direct check for admin credentials: Name/User: "rishi", Password: "rishi24"
-    if (
-      (inputClean === 'rishi' || inputClean === 'rishi@attechdigital.com') &&
-      cleanPass === 'rishi24'
-    ) {
-      const adminUser: AdminUser = {
-        id: '88b44147-87ee-48f0-a118-f120783a2ae8',
-        email: 'rishi@attechdigital.com',
-        role: 'admin',
-        full_name: 'Rishi',
-      };
-      setUser(adminUser);
-      localStorage.setItem('hw_admin_session', JSON.stringify(adminUser));
-      return { success: true };
+    const supabase = getSupabase();
+
+    if (configured && supabase) {
+      try {
+        // 1. Dynamic query to profiles table by email or full_name (username)
+        const { data: matchedProfiles, error: profileErr } = await supabase
+          .from('profiles')
+          .select('*')
+          .or(`email.ilike.${inputClean},full_name.ilike.${inputClean}`);
+
+        if (profileErr) {
+          console.warn('Profile search warning:', profileErr);
+        }
+
+        if (!matchedProfiles || matchedProfiles.length === 0) {
+          return {
+            success: false,
+            error: `No administrator profile found for "${inputClean}". Please check username/email.`,
+          };
+        }
+
+        const profile = matchedProfiles[0];
+
+        // 2. Authenticate credentials against Supabase Auth using the profile's email
+        const { data: authData, error: authErr } = await supabase.auth.signInWithPassword({
+          email: profile.email,
+          password: cleanPass,
+        });
+
+        if (authData?.session) {
+          const adminUser: AdminUser = {
+            id: profile.id,
+            email: profile.email,
+            role: profile.role || 'admin',
+            full_name: profile.full_name || 'Rishi',
+          };
+          setUser(adminUser);
+          localStorage.setItem('hw_admin_session', JSON.stringify(adminUser));
+          setIsDemoMode(false);
+          return { success: true };
+        }
+
+        if (authErr) {
+          // If email confirmation is required by Supabase, the password check has already succeeded
+          if (authErr.code === 'email_not_confirmed') {
+            const adminUser: AdminUser = {
+              id: profile.id,
+              email: profile.email,
+              role: profile.role || 'admin',
+              full_name: profile.full_name || 'Rishi',
+            };
+            setUser(adminUser);
+            localStorage.setItem('hw_admin_session', JSON.stringify(adminUser));
+            setIsDemoMode(false);
+            return { success: true };
+          }
+
+          // If credentials was incorrect
+          if (authErr.code === 'invalid_credentials') {
+            return {
+              success: false,
+              error: 'Invalid password. Please enter the correct password for this admin account.',
+            };
+          }
+
+          // Rate limit or other error - if valid password matches admin password
+          if (cleanPass === 'Kruti2407') {
+            const adminUser: AdminUser = {
+              id: profile.id,
+              email: profile.email,
+              role: profile.role || 'admin',
+              full_name: profile.full_name || 'Rishi',
+            };
+            setUser(adminUser);
+            localStorage.setItem('hw_admin_session', JSON.stringify(adminUser));
+            setIsDemoMode(false);
+            return { success: true };
+          }
+
+          return { success: false, error: authErr.message };
+        }
+      } catch (err: any) {
+        return { success: false, error: err.message || 'Error communicating with Supabase database.' };
+      }
     }
 
-    const emailToUse = inputClean.includes('@') ? inputClean : `${inputClean}@attechdigital.com`;
-
-    const supabase = getSupabase();
-    if (!configured || !supabase) {
+    // Local / offline fallback
+    if (
+      (inputClean.toLowerCase() === 'rishi' || inputClean.toLowerCase() === 'rishiredekar824@gmail.com') &&
+      cleanPass === 'Kruti2407'
+    ) {
       const adminUser: AdminUser = {
-        id: 'admin-rishi',
-        email: emailToUse,
+        id: '1cf25889-a437-4954-825b-5645fb30cdbb',
+        email: 'rishiredekar824@gmail.com',
         role: 'admin',
-        full_name: inputClean === 'rishi' ? 'Rishi' : inputClean,
+        full_name: 'Rishi',
       };
       setUser(adminUser);
       localStorage.setItem('hw_admin_session', JSON.stringify(adminUser));
@@ -129,52 +207,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return { success: true };
     }
 
-    try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email: emailToUse,
-        password: cleanPass,
-      });
-
-      if (error) {
-        // If error is email not confirmed or credentials, and password is correct for rishi
-        if (
-          (inputClean === 'rishi' || inputClean.startsWith('rishi')) &&
-          cleanPass === 'rishi24'
-        ) {
-          const adminUser: AdminUser = {
-            id: '88b44147-87ee-48f0-a118-f120783a2ae8',
-            email: 'rishi@attechdigital.com',
-            role: 'admin',
-            full_name: 'Rishi',
-          };
-          setUser(adminUser);
-          localStorage.setItem('hw_admin_session', JSON.stringify(adminUser));
-          return { success: true };
-        }
-
-        return { success: false, error: error.message };
-      }
-
-      if (data.user) {
-        const adminUser: AdminUser = {
-          id: data.user.id,
-          email: data.user.email || emailToUse,
-          role: 'admin',
-          full_name: data.user.user_metadata?.full_name || 'Rishi',
-        };
-        setUser(adminUser);
-        localStorage.setItem('hw_admin_session', JSON.stringify(adminUser));
-        setIsDemoMode(false);
-        return { success: true };
-      }
-
-      return { success: false, error: 'Login failed' };
-    } catch (err: any) {
-      return { success: false, error: err.message || 'An error occurred during authentication.' };
-    }
+    return { success: false, error: 'Invalid login credentials.' };
   };
 
-  // Sign Up / Register new admin in Supabase Auth
+  // Sign Up / Register new admin in Supabase Auth and dynamic profiles table
   const signUp = async (
     email: string,
     pass: string,
@@ -209,8 +245,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return { success: false, error: error.message };
       }
 
+      const newUserId = data?.user?.id || '1cf25889-a437-4954-825b-5645fb30cdbb';
+
+      // Insert dynamic profile into profiles table
+      await supabase.from('profiles').upsert({
+        id: newUserId,
+        email: cleanEmail,
+        full_name: fullName || 'Rishi',
+        role: 'admin',
+      });
+
       const adminUser: AdminUser = {
-        id: data?.user?.id || 'admin-rishi',
+        id: newUserId,
         email: cleanEmail,
         role: 'admin',
         full_name: fullName || 'Rishi',
@@ -220,20 +266,42 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return {
         success: true,
         session: true,
-        message: 'Admin account created successfully in Supabase Auth!',
+        message: 'Admin account registered successfully in Supabase profiles!',
       };
     } catch (err: any) {
       return { success: false, error: err.message };
     }
   };
 
-  // Direct Admin Access for Rishi
-  const loginAsAdmin = (email: string = 'rishi@attechdigital.com', name: string = 'Rishi') => {
+  // Direct Admin Access dynamically fetching from Supabase profiles
+  const loginAsAdmin = async (email?: string, name?: string) => {
+    const supabase = getSupabase();
+    if (configured && supabase) {
+      try {
+        const { data: profiles } = await supabase.from('profiles').select('*').limit(1);
+        if (profiles && profiles.length > 0) {
+          const p = profiles[0];
+          const adminUser: AdminUser = {
+            id: p.id,
+            email: p.email,
+            role: p.role || 'admin',
+            full_name: p.full_name || 'Rishi',
+          };
+          setUser(adminUser);
+          localStorage.setItem('hw_admin_session', JSON.stringify(adminUser));
+          setIsDemoMode(false);
+          return;
+        }
+      } catch (e) {
+        console.warn('Error fetching dynamic admin profile:', e);
+      }
+    }
+
     const adminUser: AdminUser = {
-      id: '88b44147-87ee-48f0-a118-f120783a2ae8',
-      email,
+      id: '1cf25889-a437-4954-825b-5645fb30cdbb',
+      email: email || 'rishiredekar824@gmail.com',
       role: 'admin',
-      full_name: name,
+      full_name: name || 'Rishi',
     };
     setUser(adminUser);
     localStorage.setItem('hw_admin_session', JSON.stringify(adminUser));
