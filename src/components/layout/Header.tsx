@@ -79,6 +79,14 @@ export const Header: React.FC<HeaderProps> = ({
           <Menu className="w-5 h-5" />
         </button>
 
+        <div className="lg:hidden shrink-0">
+          <img
+            src="/at-tech-logo-teal.jpg"
+            alt="At Tech Digital Logo"
+            className="w-8 h-8 rounded-lg object-cover shadow-sm border border-cyan-500/30"
+          />
+        </div>
+
         <div>
           <h1 className="text-lg sm:text-xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
             {activePage.title}
@@ -162,13 +170,20 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
 
           {userMenuOpen && (
-            <div className="absolute right-0 mt-2 w-60 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl z-50 overflow-hidden divide-y divide-slate-100 dark:divide-slate-800/80">
-              <div className="p-3.5 bg-slate-50 dark:bg-slate-950/40">
-                <div className="text-xs font-semibold text-slate-900 dark:text-white">{user?.full_name || 'Admin User'}</div>
-                <div className="text-[11px] text-slate-500 dark:text-slate-400 truncate">{user?.email || 'admin@attechdigital.com'}</div>
-                <div className="mt-2 flex items-center gap-1.5 text-[10px] font-semibold text-cyan-700 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-950/60 px-2 py-0.5 rounded border border-cyan-200 dark:border-cyan-800/40 w-fit">
-                  <ShieldCheck className="w-3 h-3" />
-                  <span>Admin Privileges</span>
+            <div className="absolute right-0 mt-2 w-64 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl z-50 overflow-hidden divide-y divide-slate-100 dark:divide-slate-800/80">
+              <div className="p-3.5 bg-slate-50 dark:bg-slate-950/40 flex items-center gap-3">
+                <img
+                  src="/at-tech-logo-teal.jpg"
+                  alt="At Tech Digital"
+                  className="w-10 h-10 rounded-xl object-cover border border-cyan-500/30 shadow-sm shrink-0"
+                />
+                <div className="min-w-0">
+                  <div className="text-xs font-semibold text-slate-900 dark:text-white truncate">{user?.full_name || 'Admin User'}</div>
+                  <div className="text-[11px] text-slate-500 dark:text-slate-400 truncate">{user?.email || 'admin@attechdigital.com'}</div>
+                  <div className="mt-1 flex items-center gap-1 text-[10px] font-semibold text-cyan-700 dark:text-cyan-400">
+                    <ShieldCheck className="w-3 h-3" />
+                    <span>Hardware Admin</span>
+                  </div>
                 </div>
               </div>
 

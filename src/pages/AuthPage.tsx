@@ -3,42 +3,27 @@ import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { Button } from '../components/common/Button';
 import { Input } from '../components/common/Input';
-import { Zap, ShieldCheck, Lock, User, CheckCircle2, Sun, Moon } from 'lucide-react';
+import { BrandLogo } from '../components/common/BrandLogo';
+import { ShieldCheck, Lock, User, Sun, Moon } from 'lucide-react';
 
 export const AuthPage: React.FC = () => {
-  const { login, signUp } = useAuth();
+  const { login } = useAuth();
   const { theme, toggleTheme } = useTheme();
-  const [mode, setMode] = useState<'signin' | 'signup'>('signin');
 
   const [emailOrUser, setEmailOrUser] = useState('');
   const [password, setPassword] = useState('');
-  const [fullName, setFullName] = useState('');
-
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-  const [successMsg, setSuccessMsg] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setErrorMsg(null);
-    setSuccessMsg(null);
 
-    if (mode === 'signin') {
-      const res = await login(emailOrUser, password);
-      setLoading(false);
-      if (!res.success) {
-        setErrorMsg(res.error || 'Invalid credentials. Please verify your username/email and password.');
-      }
-    } else {
-      const emailToUse = emailOrUser.includes('@') ? emailOrUser : `${emailOrUser}@attechdigital.com`;
-      const res = await signUp(emailToUse, password, fullName);
-      setLoading(false);
-      if (!res.success) {
-        setErrorMsg(res.error || 'Failed to create account.');
-      } else {
-        setSuccessMsg(res.message || 'Admin account successfully registered!');
-      }
+    const res = await login(emailOrUser, password);
+    setLoading(false);
+    if (!res.success) {
+      setErrorMsg(res.error || 'Invalid credentials. Please verify your username/email and password.');
     }
   };
 
@@ -73,8 +58,8 @@ export const AuthPage: React.FC = () => {
       <div className="w-full max-w-md relative z-10">
         {/* Brand Header */}
         <div className="text-center mb-6">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-tr from-indigo-500 via-cyan-500 to-blue-600 shadow-xl shadow-cyan-500/20 mb-3 text-white">
-            <Zap className="w-8 h-8" />
+          <div className="inline-flex justify-center mb-4">
+            <BrandLogo size="xl" variant="badge" />
           </div>
           <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
             AT TECH <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-indigo-600 dark:from-cyan-400 dark:to-indigo-400">DIGITAL</span>
@@ -84,49 +69,13 @@ export const AuthPage: React.FC = () => {
 
         {/* Auth Box */}
         <div className="rounded-2xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 p-6 sm:p-7 shadow-xl dark:shadow-2xl backdrop-blur-md space-y-5">
-          {/* Tabs */}
-          <div className="flex rounded-xl bg-slate-100 dark:bg-slate-950 p-1 border border-slate-200 dark:border-slate-800 text-xs font-semibold">
-            <button
-              type="button"
-              onClick={() => {
-                setMode('signin');
-                setErrorMsg(null);
-                setSuccessMsg(null);
-              }}
-              className={`flex-1 py-2 rounded-lg transition-all cursor-pointer ${
-                mode === 'signin'
-                  ? 'bg-gradient-to-r from-indigo-600 to-cyan-600 text-white shadow'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-              }`}
-            >
-              Admin Sign In
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setMode('signup');
-                setErrorMsg(null);
-                setSuccessMsg(null);
-              }}
-              className={`flex-1 py-2 rounded-lg transition-all cursor-pointer ${
-                mode === 'signup'
-                  ? 'bg-gradient-to-r from-indigo-600 to-cyan-600 text-white shadow'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-              }`}
-            >
-              Register Admin
-            </button>
-          </div>
-
           <div className="space-y-1">
             <h2 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
               <ShieldCheck className="w-5 h-5 text-cyan-500 dark:text-cyan-400" />
-              <span>{mode === 'signin' ? 'System Administrator Login' : 'Register Administrator'}</span>
+              <span>Admin Sign In</span>
             </h2>
             <p className="text-xs text-slate-500 dark:text-slate-400">
-              {mode === 'signin'
-                ? 'Sign in with your administrator credentials to manage inventory & suppliers.'
-                : 'Register a new administrator account in Supabase.'}
+              Sign in with your administrator credentials to manage hardware inventory & suppliers.
             </p>
           </div>
 
@@ -136,25 +85,7 @@ export const AuthPage: React.FC = () => {
             </div>
           )}
 
-          {successMsg && (
-            <div className="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/30 text-emerald-700 dark:text-emerald-400 text-xs leading-relaxed flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 shrink-0" />
-              <span>{successMsg}</span>
-            </div>
-          )}
-
           <form onSubmit={handleSubmit} className="space-y-4">
-            {mode === 'signup' && (
-              <Input
-                label="Full Name"
-                placeholder="Enter full name"
-                leftIcon={<User className="w-4 h-4" />}
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                required
-              />
-            )}
-
             <Input
               label="Admin Username or Email"
               type="text"
@@ -184,7 +115,7 @@ export const AuthPage: React.FC = () => {
               className="w-full mt-2"
               isLoading={loading}
             >
-              {mode === 'signin' ? 'Sign In as Administrator' : 'Register Admin'}
+              Sign In as Administrator
             </Button>
           </form>
         </div>

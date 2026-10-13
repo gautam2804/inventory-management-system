@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrandLogo } from '../common/BrandLogo';
 import {
   LayoutDashboard,
   Cpu,
@@ -11,7 +12,6 @@ import {
   Database,
   X,
   Server,
-  Zap
 } from 'lucide-react';
 import { useInventory } from '../../context/InventoryContext';
 
@@ -68,19 +68,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
         }`}
       >
         {/* Brand Header */}
-        <div className="flex items-center justify-between px-6 py-5 border-b border-slate-200 dark:border-slate-800/80">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 via-cyan-500 to-blue-600 flex items-center justify-center text-white shadow-lg shadow-cyan-500/20">
-              <Zap className="w-6 h-6" />
-            </div>
-            <div>
-              <div className="text-base font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-1.5">
-                <span>AT TECH</span>
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-indigo-600 dark:from-cyan-400 dark:to-indigo-400">DIGITAL</span>
-              </div>
-              <div className="text-[10px] uppercase font-mono tracking-wider text-slate-500 dark:text-slate-400">Inventory Management</div>
-            </div>
-          </div>
+        <div className="flex items-center justify-between px-5 py-4 border-b border-slate-200 dark:border-slate-800/80">
+          <BrandLogo size="md" variant="full" />
           <button
             onClick={onClose}
             className="lg:hidden p-1.5 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"

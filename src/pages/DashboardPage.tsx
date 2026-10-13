@@ -85,8 +85,12 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 relative z-10">
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-100/70 dark:bg-cyan-500/10 border border-cyan-200 dark:border-cyan-500/20 text-cyan-800 dark:text-cyan-400 text-xs font-semibold mb-2">
-              <span className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse" />
-              At Tech Digital &bull; Hardware Intelligence
+              <img
+                src="/at-tech-logo-cyan-transparent.png"
+                alt="Logo"
+                className="w-3.5 h-3.5 object-contain"
+              />
+              <span>At Tech Digital &bull; Hardware Intelligence</span>
             </div>
             <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
               Inventory Management Overview
